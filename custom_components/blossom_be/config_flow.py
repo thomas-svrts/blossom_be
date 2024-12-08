@@ -32,8 +32,7 @@ class BlossomConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 # Create the config entry
                 return self.async_create_entry(
                     title="Blossom Integration",
-                    data={CONF_REFRESH_TOKEN: refresh_token,
-                          "server_details": details},  # Optionally store server details
+                    data={CONF_REFRESH_TOKEN: refresh_token}
                 )
             else:
                 # Use detailed error message from the server response
