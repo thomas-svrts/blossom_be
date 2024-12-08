@@ -26,13 +26,15 @@ class BlossomConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             is_valid, details = await self._validate_refresh_token(refresh_token)
     
             if is_valid:
-                # Save the refresh token securely
-                await store.async_save({CONF_REFRESH_TOKEN: refresh_token})
-    
+                #a refresh token is only valid 1 time, so store the new each time you refresh or validate
+                new_refresh_token = details.get("refresh_token")
+
+                #Save the new refresh token securely
+                await store.async_save({CONF_REFRESH_TOKEN: new_refresh_token})    
                 # Create the config entry
                 return self.async_create_entry(
                     title="Blossom Integration",
-                    data={CONF_REFRESH_TOKEN: refresh_token}
+                    data={CONF_REFRESH_TOKEN: new_refresh_token}
                 )
             else:
                 # Use detailed error message from the server response
