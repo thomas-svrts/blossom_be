@@ -10,10 +10,6 @@ from .sensor import async_setup_entry as async_setup_sensor  # Import from senso
 from homeassistant.helpers.storage import Store
 
 
-
-# Define a global Store object for storing refresh token
-STORE = Store(1, f"{DOMAIN}_storage")
-
 async def async_setup(hass, config):
     """Set up the Blossom integration."""
     return True
@@ -21,7 +17,8 @@ async def async_setup(hass, config):
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up Blossom from a config entry."""
     # Load stored data
-    stored_data = await STORE.async_load()
+    store = Store(hass, version=1, key=f"{DOMAIN}_storage")
+    stored_data = await store.async_load()
 
     # Check if the refresh token is available in storage
     refresh_token = stored_data.get("refresh_token") if stored_data else None
