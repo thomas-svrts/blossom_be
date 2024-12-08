@@ -54,17 +54,9 @@ class BlossomChargingStation(SensorEntity):
         await self.coordinator.async_request_refresh()
 
 # Example Home Assistant Integration Setup
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):
-    """Set up the integration from a config entry."""
-    stored_data = await hass.helpers.storage.async_load(f"{DOMAIN}_refresh_token")
-    refresh_token = stored_data.get("refresh_token")
-    
-    """Set up the Blossom charging station sensor."""
-    coordinator = BlossomDataUpdateCoordinator(hass, refresh_token)
-    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
-
-    # Initialize coordinator
-    await coordinator.async_config_entry_first_refresh()
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):   
+    # Access the coordinator stored in hass.data
+    coordinator = hass.data[DOMAIN][entry.entry_id]
     
     # Add the Blossom charging station sensor
     async_add_entities([BlossomChargingStation(coordinator, "blossom_charging_station", "Blossom Charging Station")])
