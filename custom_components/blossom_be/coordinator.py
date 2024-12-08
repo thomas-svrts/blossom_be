@@ -28,8 +28,22 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
         self.hass = hass
         self.refresh_token = refresh_token
         self.access_token = None
+        self.token_expiry = None
         
     async def async_refresh_access_token(self):
+         """Refresh the access token only if it has expired."""
+
+        # Check if we already have a valid access token
+        if self.access_token and self.token_expiry and datetime.utcnow() < self.token_expiry:
+            # Token is still valid, no need to refresh
+            _LOGGER.info("Access token is still valid, skipping refresh.")
+            return
+        
+        # If we don't have a valid token or the token has expired, refresh it
+        if not self.refresh_token:
+            _LOGGER.error("No refresh token available, cannot refresh access token.")
+            return None
+            
         """Fetch a new access token using the refresh token."""
         payload = {
             "grant_type": "refresh_token",
@@ -40,15 +54,24 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
             async with session.post(AUTH_URL, json=payload) as response:
                 if response.status == 200:
                     data = await response.json()
-                    self.access_token = data["access_token"]
-                    self.refresh_token =  data["refresh_token"]
-                    _LOGGER.debug("Access token refreshed successfully.")
+                    self.access_token = data.get("access_token")
+                    self.refresh_token = data.get("refresh_token")
+                    self.token_expiry = datetime.utcnow() + timedelta(seconds=data.get("expires_in", 3600))  # Set expiration time
+                    # Subtract 5 minutes from the expiration time for a buffer
+                    self.token_expiry -= timedelta(minutes=5)
+                    _LOGGER.info("Access token refreshed successfully.")
                 else:
                     _LOGGER.error("Failed to refresh access token: %s", response.status)
                     raise Exception("Authentication error")
 
     
     async def _async_update_data(self):
+
+         # Ensure the access token is valid and not expired
+        if not await self.async_refresh_access_token():
+            _LOGGER.error("Failed to refresh access token.")
+            return None
+        
         """Fetch data from Blossom API."""
         headers = {"Authorization": f"Bearer {self.access_token}"}
         
