@@ -3,25 +3,52 @@ import aiohttp
 from datetime import timedelta
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from homeassistant.core import HomeAssistant
+from .const import DOMAIN
+
 
 _LOGGER = logging.getLogger(__name__)
 
 # Replace with your actual API URL
 SET_POINTS_URL = "https://api.blossom.be/api/hems/set-points"
 UPDATE_MODE_URL = "https://api.blossom.be/api/hems/set-points"
+AUTH_URL = "https://blossom-production.eu.auth0.com/oauth/token"
+CLIENT_ID = "RTofmsbiLPSlisRHtIFohGRPBcGgrIrs"
 
 class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
     """Fetch data from the Blossom API."""
     
-    def __init__(self, hass: HomeAssistant, access_token: str):
+    def __init__(self, hass: HomeAssistant, refresh_token: str):
         """Initialize the coordinator."""
         super().__init__(
             hass,
             _LOGGER,
-            name="blossom_be_data",
+            name="{DOMAIN}_coordinator",
             update_interval=timedelta(minutes=10),  # Update every 10 minutes
         )
-        self._access_token = access_token
+        self.hass = hass
+        self.refresh_token = refresh_token
+        self.access_token = None
+        
+    async def async_refresh_access_token(self):
+        """Fetch a new access token using the refresh token."""
+        payload = {
+            "grant_type": "refresh_token",
+            "client_id": CLIENT_ID,
+            "refresh_token": self.refresh_token,
+        }
+        async with aiohttp.ClientSession() as session:
+            async with session.post(AUTH_URL, json=payload) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    self.access_token = data["access_token"]
+                    _LOGGER.debug("Access token refreshed successfully.")
+                else:
+                    _LOGGER.error("Failed to refresh access token: %s", response.status)
+                    raise Exception("Authentication error")
+
+    
+
+
     
     async def _async_update_data(self):
         """Fetch data from Blossom API."""
