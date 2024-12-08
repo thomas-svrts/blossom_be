@@ -1,13 +1,10 @@
 # __init__.py
-from homeassistant import config_entries
 from .const import DOMAIN
-from .config_flow import BlossomConfigFlow
-from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from .coordinator import BlossomDataUpdateCoordinator
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
-from .sensor import async_setup_entry as async_setup_sensor  # Import from sensor.py
 from homeassistant.helpers.storage import Store
+from homeassistant.components.sensor import async_setup_platform
 
 
 async def async_setup(hass, config):
@@ -29,8 +26,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
     # Perform the first data fetch
     await coordinator.async_config_entry_first_refresh()
-    
-    # Set up the platform (sensor)
-    await hass.config_entries.async_setup_platforms(entry, ["sensor"])
+
+    # Set up the platform (sensor) for Blossom
+    await async_setup_platform(hass, entry, async_add_entities)
 
     return True
