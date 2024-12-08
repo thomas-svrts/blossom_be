@@ -52,7 +52,7 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
     
     async def _async_update_data(self):
         """Fetch data from Blossom API."""
-        headers = {"Authorization": f"Bearer {self._access_token}"}
+        headers = {"Authorization": f"Bearer {self.access_token}"}
         
         async with aiohttp.ClientSession() as session:
             try:
@@ -69,7 +69,7 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
 
     async def update_mode(self, mode: str, cap_value: int = None):
         """Update the mode of the Blossom charging station."""
-        headers = {"Authorization": f"Bearer {self._access_token}", "Content-Type": "application/json"}
+        headers = {"Authorization": f"Bearer {self.access_token}", "Content-Type": "application/json"}
         
         json_data = {"mode": mode}
         if cap_value:
