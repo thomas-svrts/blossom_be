@@ -10,17 +10,17 @@
         "step": {
             "login": {
                 "data": {
-                    "password": "Wachtwoord",
+                    "refresh": "Wachtwoord",
                     "username": "Gebruikersnaam / e-mail"
                 },
-                "title": "Inloggen bij Frank Energie"
+                "title": "Inloggen bij Blossom"
             },
             "user": {
                 "data": {
-                    "authentication": "Gebruik Frank Energie-accountgegevens"
+                    "authentication": "Gebruik Blossom-accountgegevens"
                 },
-                "title": "Wil je inloggen bij Frank Energie?",
-                "description": "Inloggen is niet nodig om deze integratie te kunnen gebruiken maar biedt wel de mogelijkheid extra gegevens op te halen."
+                "title": "Wil je inloggen bij Blossom?",
+                "description": "Om in te loggen dien je het refresh_token van je account bij Blossom.be opgeven. Dit start met v1."
             }
         }
     },
