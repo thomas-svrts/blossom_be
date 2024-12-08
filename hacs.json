@@ -1,9 +1,9 @@
 {
-	"name": "Frank Energie",
-	"country": "NL",
+	"name": "Blossom Energy",
+	"country": "BE",
 	"domains": "sensor",
 	"render_readme": true,
-	"homeassistant": "2022.3.0",
+	"homeassistant": "2024.12.0",
 	"zip_release": true,
-	"filename": "frank_energie.zip"
+	"filename": "blossom_be.zip"
 }
