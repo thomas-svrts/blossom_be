@@ -3,7 +3,5 @@
 	"country": "BE",
 	"domains": "sensor",
 	"render_readme": true,
-	"homeassistant": "2024.12.0",
-	"zip_release": true,
-	"filename": "blossom_be.zip"
+	"homeassistant": "2024.12.0"
 }
