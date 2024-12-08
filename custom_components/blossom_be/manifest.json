@@ -1,13 +1,10 @@
 {
-  "domain": "frank_energie",
-  "name": "Frank Energie",
+  "domain": "blossom_be",
+  "name": "Blossom belgium",
   "config_flow": true,
-  "codeowners": ["@bajansen"],
-  "documentation": "https://github.com/bajansen/home-assistant-frank_energie",
-  "issue_tracker": "https://github.com/bajansen/home-assistant-frank_energie/issues",
+  "codeowners": ["@thomas-svrts"],
+  "documentation": "https://github.com/thomas-svrts/hacs_blossom_energy",
+  "issue_tracker": "https://github.com/thomas-svrts/hacs_blossom_energy/issues",
   "iot_class": "cloud_polling",
-  "requirements": [
-    "python-frank-energie==6.0.0"
-  ],
   "version": "0.0.0"
 }
