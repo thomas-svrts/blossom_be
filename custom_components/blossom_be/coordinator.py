@@ -31,8 +31,8 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
         self.token_expiry = None
         
     async def async_refresh_access_token(self):
-         """Refresh the access token only if it has expired."""
-
+        """Refresh the access token only if it has expired."""
+    
         # Check if we already have a valid access token
         if self.access_token and self.token_expiry and datetime.utcnow() < self.token_expiry:
             # Token is still valid, no need to refresh
@@ -43,6 +43,8 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
         if not self.refresh_token:
             _LOGGER.error("No refresh token available, cannot refresh access token.")
             return None
+
+        
             
         """Fetch a new access token using the refresh token."""
         payload = {
