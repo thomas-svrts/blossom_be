@@ -4,8 +4,6 @@ from .coordinator import BlossomDataUpdateCoordinator
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.storage import Store
-from homeassistant.components.sensor import async_setup_platform
-
 
 async def async_setup(hass, config):
     """Set up the Blossom integration."""
