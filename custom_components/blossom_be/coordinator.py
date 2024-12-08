@@ -60,6 +60,8 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
                         return data  # Return the JSON data
                     else:
                         _LOGGER.error(f"Error fetching data: {response.status}")
+                        _LOGGER.error(f"Error fetching data: {headers}")
+                        _LOGGER.error(f"Error fetching data: {response}")
                         return None
             except Exception as err:
                 _LOGGER.error(f"Error fetching data from Blossom: {err}")
