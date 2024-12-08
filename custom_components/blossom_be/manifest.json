@@ -1,0 +1,10 @@
+{
+  "domain": "blossom_be",
+  "name": "Blossom belgium",
+  "config_flow": true,
+  "codeowners": ["@thomas-svrts"],
+  "documentation": "https://github.com/thomas-svrts/hacs_blossom_energy",
+  "issue_tracker": "https://github.com/thomas-svrts/hacs_blossom_energy/issues",
+  "iot_class": "cloud_polling",
+  "version": "0.0.0"
+}
