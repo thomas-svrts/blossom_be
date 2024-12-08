@@ -39,7 +39,7 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
         if self.access_token and self.token_expiry and datetime.utcnow() < self.token_expiry:
             # Token is still valid, no need to refresh
             _LOGGER.error("info: Access token is still valid, skipping refresh.")
-            return
+            return True
         
         # If we don't have a valid token or the token has expired, refresh it
         if not self.refresh_token:
@@ -67,6 +67,7 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
                 else:
                     _LOGGER.error("Failed to refresh access token: %s", response.status)
                     raise Exception("Authentication error")
+        return True
 
     
     async def _async_update_data(self):
