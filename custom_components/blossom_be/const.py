@@ -1,11 +1,11 @@
 """Constants for the Frank Energie integration."""
 from __future__ import annotations
 
-ATTRIBUTION = "Data provided by Frank Energie"
-DOMAIN = "frank_energie"
-DATA_URL = "https://frank-graphql-prod.graphcdn.app/"
+ATTRIBUTION = "Data provided by Blossom.be"
+DOMAIN = "blossom_be"
+DATA_URL = "https://api.blossom.be/"
 ICON = "mdi:currency-eur"
-COMPONENT_TITLE = "Frank Energie"
+COMPONENT_TITLE = "Blossom be"
 
 CONF_COORDINATOR = "coordinator"
 ATTR_TIME = "from_time"
