@@ -7,6 +7,8 @@ from .coordinator import BlossomDataUpdateCoordinator
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 from .sensor import async_setup_entry as async_setup_sensor  # Import from sensor.py
+from homeassistant.helpers.storage import Store
+
 
 
 
@@ -16,10 +18,12 @@ async def async_setup(hass, config):
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up Blossom from a config entry."""
-    
-    # Get stored refresh token (if any) from secret storage or elsewhere
-    stored_data = await hass.helpers.storage.async_load(f"{DOMAIN}_refresh_token")
-    refresh_token = stored_data.get("refresh_token")
+    # Load stored data
+    store = Store(self.hass, version=1, key=f"{DOMAIN}_storage")
+    stored_data = await store.async_load()
+
+    # Check if the refresh token is available in storage
+    refresh_token = stored_data.get("refresh_token") if stored_data else None
     
     # Create a coordinator to manage data fetching
     coordinator = BlossomDataUpdateCoordinator(hass, refresh_token)
