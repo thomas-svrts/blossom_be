@@ -4,6 +4,11 @@ from .const import DOMAIN
 from .config_flow import BlossomConfigFlow
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from .coordinator import BlossomDataUpdateCoordinator
+from homeassistant.core import HomeAssistant
+from homeassistant.config_entries import ConfigEntry
+from .sensor import async_setup_entry as async_setup_sensor  # Import from sensor.py
+
+
 
 async def async_setup(hass, config):
     """Set up the Blossom integration."""
