@@ -41,13 +41,11 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
                 if response.status == 200:
                     data = await response.json()
                     self.access_token = data["access_token"]
+                    self.refresh_token =  data["refresh_token"]
                     _LOGGER.debug("Access token refreshed successfully.")
                 else:
                     _LOGGER.error("Failed to refresh access token: %s", response.status)
                     raise Exception("Authentication error")
-
-    
-
 
     
     async def _async_update_data(self):
@@ -66,6 +64,7 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
             except Exception as err:
                 _LOGGER.error(f"Error fetching data from Blossom: {err}")
                 return None
+
 
     async def update_mode(self, mode: str, cap_value: int = None):
         """Update the mode of the Blossom charging station."""
