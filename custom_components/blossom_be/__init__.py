@@ -27,7 +27,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     # Perform the first data fetch
     await coordinator.async_config_entry_first_refresh()
 
-    # Set up the platform (sensor) for Blossom
-    await async_setup_platform(hass, entry, async_add_entities)
+    # Forward setup for the sensor platform
+    await hass.config_entries.async_forward_entry_setups(entry, ["sensor"])
 
     return True
