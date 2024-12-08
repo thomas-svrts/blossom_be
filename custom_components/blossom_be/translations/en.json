@@ -13,16 +13,16 @@
                     "password": "Password",
                     "username": "Username / e-mail"
                 },
-                "title": "Enter your Frank Energie account credentials"
+                "title": "Enter your Blossom account credentials"
             },
             "user": {
                 "data": {
-                    "authentication": "Use Frank Energie account credentials"
+                    "authentication": "Use Blossom BE account credentials"
                 },
-                "title": "Do you want to sign in to Frank Energie?",
-                "description": "Signing in is not required for obtaining energy price data but will add additional sensors specific to your account."
+                "title": "Do you want to sign in to Blossom BE?",
+                "description": "We need to have the Blossom refresh_token. You can obtain this by enabling the debugger in you browser and search for the token endpoint during login via app.blossom.be."
             }
         }
     },
-    "title": "Frank Energie"
+    "title": "Blossom BE"
 }
