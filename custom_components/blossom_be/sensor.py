@@ -4,6 +4,8 @@ from homeassistant.helpers.entity import Entity
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from .coordinator import BlossomDataUpdateCoordinator
+from homeassistant.config_entries import ConfigEntry
+
 
 _LOGGER = logging.getLogger(__name__)
 
