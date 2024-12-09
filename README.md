@@ -23,8 +23,11 @@ Vervolgens kunnen sensoren per stuk worden uitgeschakeld of verborgen indien gew
 
 #### Inloggen
 
-Bij het instellen van de integratie moet je je refresh token van Blossom invoeren. Je kan dit vinden door in te loggen (in private window) in de webversie "app.blossom.be" en via de debugger tools het token te achterhalen.
+Bij het instellen van de integratie moet je je refresh token van Blossom invoeren. Je kan dit vinden door in te loggen (in inPrivate window) in de webversie "app.blossom.be" en via de debugger tools het token te achterhalen.
 Dit wordt als response gevgeven op de request naar https://blossom-production.eu.auth0.com/oauth/token . Het refresh_token begint met v1.
+
+remarks: Wanneer je de refresh token hebt gekopieerd dien je je inPrivate te sluiten zonder af te melden van Blossom, zo blijft je dat refresh token verder 'leven'.
+Wanneer je dit niet afsluit zal je browser de een tijd later een nieuw refresh token aanvragen, en ook dan vervalt je oude token (Blossom hanteert [refresh token rotation](https://auth0.com/docs/secure/tokens/refresh-tokens/refresh-token-rotation)).
 ![image](https://github.com/user-attachments/assets/ae586db1-ef7a-44b2-8b7e-2d99fa82f25f)
 
 
