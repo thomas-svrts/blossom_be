@@ -3,7 +3,7 @@ import aiohttp
 from datetime import timedelta
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from homeassistant.core import HomeAssistant
-from .const import DOMAIN
+from .const import DOMAIN, CONF_REFRESH_TOKEN
 from datetime import datetime, timedelta
 from homeassistant.helpers.storage import Store
 
