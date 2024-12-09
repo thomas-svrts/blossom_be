@@ -5,6 +5,8 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from homeassistant.core import HomeAssistant
 from .const import DOMAIN
 from datetime import datetime, timedelta
+from homeassistant.helpers.storage import Store
+
 
 
 
@@ -46,8 +48,6 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
             _LOGGER.error("No refresh token available, cannot refresh access token.")
             return None
 
-        
-            
         """Fetch a new access token using the refresh token."""
         payload = {
             "grant_type": "refresh_token",
@@ -64,6 +64,10 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
                     # Subtract 5 minutes from the expiration time for a buffer
                     self.token_expiry -= timedelta(minutes=5)
                     _LOGGER.warning("Info: Access token refreshed successfully.")
+                    
+                    # store new refresh token in store for persisting after reboot.
+                    store = Store(self.hass, version=1, key=f"{DOMAIN}_storage")
+                    await store.async_save({CONF_REFRESH_TOKEN: new_refresh_token})  
                 else:
                     _LOGGER.error("Failed to refresh access token: %s", response.status)
                     raise Exception("Authentication error")
@@ -71,8 +75,8 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
 
     
     async def _async_update_data(self):
-
-         # Ensure the access token is valid and not expired
+        _LOGGER.warning("info: coordinator async_update initiated, refresh_token=%s", self.refresh_token)
+        # Ensure the access token is valid and not expired
         if not await self.async_refresh_access_token():
             _LOGGER.error("Failed to refresh access token.")
             return None
