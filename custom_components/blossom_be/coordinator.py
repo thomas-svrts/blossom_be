@@ -34,6 +34,9 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
         self.refresh_token = refresh_token
         self.access_token = None
         self.token_expiry = None
+        self.hems_last_fetched = None  # Initialize HEMS fetch timestamp
+        self.hems_data = None          # Initialize HEMS data
+        self.set_points_data = None    # Initialize set_points data
         
     async def async_refresh_access_token(self):
         """Refresh the access token only if it has expired."""
