@@ -31,11 +31,6 @@ class BlossomConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
                 #Save the new refresh token securely
                 await store.async_save({CONF_REFRESH_TOKEN: new_refresh_token})    
-                # Create the config entry
-                return self.async_create_entry(
-                    title="Blossom Integration",
-                    data={CONF_REFRESH_TOKEN: new_refresh_token}
-                )
             else:
                 # Use detailed error message from the server response
                 errors["base"] = details.get("error", "unknown_error")
