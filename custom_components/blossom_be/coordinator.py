@@ -103,7 +103,7 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
                         self.hems_last_fetched = now
                         _LOGGER.warning("Info: hems refreshed successfully")
                 else:
-                    _LOGGER.warning("Info: hems not refreshed, still up to date. Last refresh = %s", self.hems_last_fetched)
+                    _LOGGER.warning("Info: hems not refreshed, still up to date. Last refresh %s seconds ago.", (now - self.hems_last_fetched).seconds)
     
                 return {"set_points": set_points_data, "hems": self.hems_data}
             except Exception as err:
