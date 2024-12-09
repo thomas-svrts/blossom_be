@@ -13,6 +13,8 @@ async def async_setup(hass, config):
     return True
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
+    _LOGGER.warning(f"Setup entry with entry_id: {entry.entry_id}")
+
     """Set up Blossom from a config entry."""
     # Load stored data
     store = Store(hass, version=1, key=f"{DOMAIN}_storage")
