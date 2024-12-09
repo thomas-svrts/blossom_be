@@ -1,9 +1,12 @@
 # __init__.py
+import logging
 from .const import DOMAIN
 from .coordinator import BlossomDataUpdateCoordinator
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.storage import Store
+
+_LOGGER = logging.getLogger(__name__)
 
 async def async_setup(hass, config):
     """Set up the Blossom integration."""
@@ -17,7 +20,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
     # Check if the refresh token is available in storage
     refresh_token = stored_data.get("refresh_token") if stored_data else None
-    
+    _LOGGER.warning("info: Refresh token retrieved from store, token=%s", refresh_token)
+
     # Create a coordinator to manage data fetching
     coordinator = BlossomDataUpdateCoordinator(hass, refresh_token)
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
