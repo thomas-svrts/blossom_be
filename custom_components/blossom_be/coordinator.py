@@ -67,7 +67,7 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
                     
                     # store new refresh token in store for persisting after reboot.
                     store = Store(self.hass, version=1, key=f"{DOMAIN}_storage")
-                    await store.async_save({CONF_REFRESH_TOKEN: new_refresh_token})  
+                    await store.async_save({CONF_REFRESH_TOKEN: self.refresh_token})  
                 else:
                     _LOGGER.error("Failed to refresh access token: %s", response.status)
                     raise Exception("Authentication error")
