@@ -96,7 +96,6 @@ class BlossomChargingStation(SensorEntity):
         await self.coordinator.update_mode(mode, cap_value)
         await self.coordinator.async_request_refresh()
 
-# Example Home Assistant Integration Setup
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):   
     # Access the coordinator stored in hass.data
     coordinator = hass.data[DOMAIN][entry.entry_id]
