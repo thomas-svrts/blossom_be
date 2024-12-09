@@ -14,6 +14,7 @@ _LOGGER = logging.getLogger(__name__)
 
 # Replace with your actual API URL
 SET_POINTS_URL = "https://api.blossom.be/api/hems/set-points"
+HEMS_URL = "https://api.blossom.be/api/hems"
 UPDATE_MODE_URL = "https://api.blossom.be/api/hems/set-points"
 AUTH_URL = "https://blossom-production.eu.auth0.com/oauth/token"
 CLIENT_ID = "RTofmsbiLPSlisRHtIFohGRPBcGgrIrs"
@@ -83,18 +84,21 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
         
         """Fetch data from Blossom API."""
         headers = {"Authorization": f"Bearer {self.access_token}"}
+        now = datetime.utcnow()
         
         async with aiohttp.ClientSession() as session:
             try:
+                # Fetch set_points
                 async with session.get(SET_POINTS_URL, headers=headers) as response:
-                    if response.status == 200:
-                        data = await response.json()
-                        return data  # Return the JSON data
-                    else:
-                        _LOGGER.error(f"Error fetching data: {response.status}")
-                        _LOGGER.error(f"Error fetching data: {headers}")
-                        _LOGGER.error(f"Error fetching data: {response}")
-                        return None
+                    set_points_data = await response.json() if response.status == 200 else None
+    
+                # Fetch HEMS data if cache expired
+                if not self.hems_last_fetched or (now - self.hems_last_fetched).seconds > 3600:
+                    async with session.get(HEMS_URL, headers=headers) as hems_response:
+                        self.hems_data = await hems_response.json() if hems_response.status == 200 else None
+                        self.hems_last_fetched = now
+    
+                return {"set_points": set_points_data, "hems": self.hems_data}
             except Exception as err:
                 _LOGGER.error(f"Error fetching data from Blossom: {err}")
                 return None
