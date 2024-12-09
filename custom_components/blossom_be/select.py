@@ -2,7 +2,6 @@ import logging
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.components.select import SelectEntity
-from homeassistant.components.device_registry import DeviceEntryType
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 
@@ -38,7 +37,6 @@ class BlossomModeSelect(SelectEntity):
             "name": "Blossom Device",
             "manufacturer": "Blossom",
             "model": "Charging station",
-            "entry_type": DeviceEntryType.DEVICE,
         }
     
     async def async_select_option(self, option: str):
