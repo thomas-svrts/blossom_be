@@ -51,6 +51,11 @@ class BlossomSensor(SensorEntity):
             manufacturer="Blossom",
             model="Charging station",
         )
+        
+    async def async_update(self):
+        """Update the sensor."""
+        await self.coordinator.async_request_refresh()
+        
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):   
     # Access the coordinator stored in hass.data
