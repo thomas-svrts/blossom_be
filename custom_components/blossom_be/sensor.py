@@ -27,7 +27,18 @@ class BlossomSensor(SensorEntity):
 
     @property
     def native_value(self):
-        return self.coordinator.data.get("hems" if "hems" in self._key else "setpoints").get(self._key)
+        """Return the native value of the sensor."""
+        if not self.coordinator.data:
+            _LOGGER.warning("Coordinator data is None. Returning None for %s.", self._key)
+            return None
+
+        # Fetch either "hems" or "setpoints" data based on the key
+        data_section = self.coordinator.data.get("hems" if "hems" in self._key else "set_points")
+        if not data_section:
+            _LOGGER.warning("Data section '%s' is None. Returning None for %s.", "hems" if "hems" in self._key else "set_points", self._key)
+            return None    
+        
+        return data_section.get(self._key)
 
     @property
     def device_info(self):
