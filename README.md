@@ -1,6 +1,6 @@
 [![latest version](https://img.shields.io/github/tag/thomas-svrts/hacs_blossom_energy?include_prereleases=&sort=semver&label=Versie)](https://github.com/thomas-svrts/hacs_blossom_energy/releases/)
 
-# Blossom Custom Component voor Home Assistant
+# Blossom.be Custom Component voor Home Assistant
 Met deze integratie wordt de informatie van Blossom.be beschikbaar gemaakt binnen Home Assistant.
 
 
