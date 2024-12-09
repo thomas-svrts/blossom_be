@@ -23,7 +23,9 @@ Vervolgens kunnen sensoren per stuk worden uitgeschakeld of verborgen indien gew
 
 #### Inloggen
 
-Bij het instellen van de integratie moet je je refresh token van Blossom invoeren. Je kan dit vinden door in te loggen in de webversie app.blossom.be en via de debugger tools het token te achterhalen.
+Bij het instellen van de integratie moet je je refresh token van Blossom invoeren. Je kan dit vinden door in te loggen (in private window) in de webversie "app.blossom.be" en via de debugger tools het token te achterhalen.
 Dit wordt als response gevgeven op de request naar https://blossom-production.eu.auth0.com/oauth/token . Het refresh_token begint met v1.
+![image](https://github.com/user-attachments/assets/ae586db1-ef7a-44b2-8b7e-2d99fa82f25f)
+
 
 ### Gebruik
