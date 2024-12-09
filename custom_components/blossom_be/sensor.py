@@ -92,6 +92,23 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     
     # Add the Blossom charging station sensor
     async_add_entities([BlossomChargingStation(coordinator, "blossom_charging_station", "Blossom Charging Station")])
+    
+    # Create sensors entities
+    device_id = entry.entry_id
+    entities = [
+        BlossomSensor(coordinator, device_id, "Peak Solar Capacity", "peak_solar_capacity"),
+        BlossomSensor(coordinator, device_id, "Electricity Export Price", "elek_export_price"),
+        BlossomSensor(coordinator, device_id, "Electricity Import Price", "elek_import_price"),
+        BlossomSensor(coordinator, device_id, "Electricity Contract", "electricity_contract"),
+        BlossomSensor(coordinator, device_id, "User Setting Mode", "user_setting_mode"),
+        BlossomSensor(coordinator, device_id, "User Setting Cap Value", "user_setting_cap_value"),
+        BlossomSensor(coordinator, device_id, "Min Charge Rate", "min_charge_rate"),
+        BlossomSensor(coordinator, device_id, "Max Charge Rate", "max_charge_rate"),
+        BlossomSensor(coordinator, device_id, "Current Month Peak", "current_month_peak"),
+    ]
+    
+    async_add_entities(entities)
+
 
     # Example usage of mode update: You can use this in automations or service calls
     # coordinator.update_mode("solar")
