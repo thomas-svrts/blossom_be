@@ -50,7 +50,7 @@ class BlossomSensor(SensorEntity):
             identifiers={(DOMAIN, self.device_id)},
             name="Blossom Device",
             manufacturer="Blossom",
-            model="Energy Device",
+            model="Charging station",
             entry_type= DeviceEntryType.DEVICE,
         )
 
