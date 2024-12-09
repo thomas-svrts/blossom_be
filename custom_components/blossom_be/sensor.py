@@ -11,9 +11,10 @@ from homeassistant.config_entries import ConfigEntry
 _LOGGER = logging.getLogger(__name__)
 
 class BlossomSensor(SensorEntity):
-    def __init__(self, coordinator, device_id, name, key):
+    def __init__(self, coordinator, device_id, api, name, key):
         self.coordinator = coordinator
         self.device_id = device_id
+        self._api = api
         self._name = name
         self._key = key
 
@@ -27,15 +28,16 @@ class BlossomSensor(SensorEntity):
 
     @property
     def native_value(self):
+        _LOGGER.warning("creating native value for %s from api %s.", self._key, self._api)
         """Return the native value of the sensor."""
         if not self.coordinator.data:
             _LOGGER.warning("Coordinator data is None. Returning None for %s.", self._key)
             return None
 
         # Fetch either "hems" or "setpoints" data based on the key
-        data_section = self.coordinator.data.get("hems" if "hems" in self._key else "set_points")
+        data_section = self.coordinator.data.get(self._api)
         if not data_section:
-            _LOGGER.warning("Data section '%s' is None. Returning None for %s.", "hems" if "hems" in self._key else "set_points", self._key)
+            _LOGGER.warning("Data section '%s' is None. Returning None for %s.", self._api, self._key)
             return None    
         
         return data_section.get(self._key)
@@ -56,15 +58,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     # Create sensors entities
     device_id = entry.entry_id
     entities = [
-        BlossomSensor(coordinator, device_id, "Peak Solar Capacity", "peak_solar_capacity"),
-        BlossomSensor(coordinator, device_id, "Electricity Export Price", "elek_export_price"),
-        BlossomSensor(coordinator, device_id, "Electricity Import Price", "elek_import_price"),
-        BlossomSensor(coordinator, device_id, "Electricity Contract", "electricity_contract"),
-        BlossomSensor(coordinator, device_id, "User Setting Mode", "user_setting_mode"),
-        BlossomSensor(coordinator, device_id, "User Setting Cap Value", "user_setting_cap_value"),
-        BlossomSensor(coordinator, device_id, "Min Charge Rate", "min_charge_rate"),
-        BlossomSensor(coordinator, device_id, "Max Charge Rate", "max_charge_rate"),
-        BlossomSensor(coordinator, device_id, "Current Month Peak", "current_month_peak"),
+        BlossomSensor(coordinator, device_id, "hems", "Peak Solar Capacity", "peak_solar_capacity"),
+        BlossomSensor(coordinator, device_id, "hems", "Electricity Export Price", "elek_export_price"),
+        BlossomSensor(coordinator, device_id, "hems", "Electricity Import Price", "elek_import_price"),
+        BlossomSensor(coordinator, device_id, "hems", "Electricity Contract", "electricity_contract"),
+        BlossomSensor(coordinator, device_id, "set_points", "User Setting Mode", "user_setting_mode"),
+        BlossomSensor(coordinator, device_id, "set_points", "User Setting Cap Value", "user_setting_cap_value"),
+        BlossomSensor(coordinator, device_id, "set_points", "Min Charge Rate", "min_charge_rate"),
+        BlossomSensor(coordinator, device_id, "set_points", "Max Charge Rate", "max_charge_rate"),
+        BlossomSensor(coordinator, device_id, "set_points", "Current Month Peak", "current_month_peak"),
     ]
     
     async_add_entities(entities)
