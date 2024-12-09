@@ -1,7 +1,7 @@
 import logging
 from .const import DOMAIN
 from homeassistant.components.sensor import SensorEntity
-from homeassistant.helpers.entity import Entity
+from homeassistant.helpers.entity import Entity, DeviceInfo
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from .coordinator import BlossomDataUpdateCoordinator
@@ -9,6 +9,35 @@ from homeassistant.config_entries import ConfigEntry
 
 
 _LOGGER = logging.getLogger(__name__)
+
+class BlossomSensor(SensorEntity):
+    def __init__(self, coordinator, device_id, name, key):
+        self.coordinator = coordinator
+        self.device_id = device_id
+        self._name = name
+        self._key = key
+
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def unique_id(self):
+        return f"{self.device_id}_{self._key}"
+
+    @property
+    def native_value(self):
+        return self.coordinator.data.get("hems" if "hems" in self._key else "setpoints").get(self._key)
+
+    @property
+    def device_info(self):
+        return DeviceInfo(
+            identifiers={(DOMAIN, self.device_id)},
+            name="Blossom Device",
+            manufacturer="Blossom",
+            model="Energy Device",
+        )
+
 
 class BlossomChargingStation(SensorEntity):
     """Representation of a Blossom charging station."""
