@@ -1,7 +1,6 @@
 import logging
 from .const import DOMAIN
 from homeassistant.components.sensor import SensorEntity
-from homeassistant.components.device_registry import DeviceEntryType
 from homeassistant.helpers.entity import Entity, DeviceInfo
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -51,7 +50,6 @@ class BlossomSensor(SensorEntity):
             name="Blossom Device",
             manufacturer="Blossom",
             model="Charging station",
-            entry_type= DeviceEntryType.DEVICE,
         )
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):   
