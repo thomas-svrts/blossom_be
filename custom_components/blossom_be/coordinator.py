@@ -94,12 +94,16 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
                 # Fetch set_points
                 async with session.get(SET_POINTS_URL, headers=headers) as response:
                     set_points_data = await response.json() if response.status == 200 else None
+                    _LOGGER.warning("Info: set_points_data refreshed successfully.")
     
                 # Fetch HEMS data if cache expired
                 if not self.hems_last_fetched or (now - self.hems_last_fetched).seconds > 3600:
                     async with session.get(HEMS_URL, headers=headers) as hems_response:
                         self.hems_data = await hems_response.json() if hems_response.status == 200 else None
                         self.hems_last_fetched = now
+                        _LOGGER.warning("Info: hems refreshed successfully")
+                else:
+                    _LOGGER.warning("Info: hems not refreshed, still up to date. Last refresh = %s", self.hems_last_fetched)
     
                 return {"set_points": set_points_data, "hems": self.hems_data}
             except Exception as err:
