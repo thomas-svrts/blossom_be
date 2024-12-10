@@ -36,7 +36,7 @@ class BlossomModeSelect(SelectEntity):
         """Return a unique ID for this entity."""
         return f"{self.device_id}_mode_selector"
         
-   @property
+    @property
     def options(self):
         return ["solar", "cap"]
 
