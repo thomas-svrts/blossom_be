@@ -27,7 +27,7 @@ class BlossomModeSelect(SelectEntity):
         self._name = "Charging Mode"
         
         """Initialize the Demo select entity."""
-        self._attr_unique_id = "{self.device_id}_mode_selector"
+        self._attr_unique_id = f"{self.device_id}_mode_selector"
         self._attr_current_option = self.coordinator.data.get("set_points", {}).get("user_setting_cap_value", "solar")
         self._attr_options = ["solar", "cap"]
 
