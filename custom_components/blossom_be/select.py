@@ -1,10 +1,10 @@
 import logging
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.components.select import SelectEntity
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
-
 from .coordinator import BlossomDataUpdateCoordinator
 from .const import DOMAIN
 
