@@ -42,7 +42,15 @@ class BlossomModeSelect(SelectEntity):
     async def async_select_option(self, option: str):
         """Handle the option being changed."""
         if option in self._attr_options:
+            cap_value = None
+            if option == "cap":
+                # Fetch the current value of the user_setting_cap_value sensor
+                cap_value = self.coordinator.data.get("set_points", {}).get("user_setting_cap_value")
+                if cap_value is None:
+                    _LOGGER.error("Cannot switch to 'cap' mode: cap value is missing.")
+                    return
+            
             # Call the API to update the mode
-            await self.coordinator.update_mode(option)
+            await self.coordinator.update_mode(option, cap_value)
             self._attr_current_option = option
             self.async_write_ha_state()  # Notify Home Assistant of the change
