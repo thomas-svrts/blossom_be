@@ -54,7 +54,8 @@ class BlossomModeSelect(SelectEntity):
                 if cap_value is None:
                     _LOGGER.error("Cannot switch to 'cap' mode: cap value is missing.")
                     return
-            
+                    
+            _LOGGER.warning("Info: before update: option = %s and cap_value = %s", option, cap_value)
             # Call the API to update the mode
             await self.coordinator.update_mode(option, cap_value)
             self._attr_current_option = option
