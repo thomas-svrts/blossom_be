@@ -7,9 +7,6 @@ from .const import DOMAIN, CONF_REFRESH_TOKEN
 from datetime import datetime, timedelta
 from homeassistant.helpers.storage import Store
 
-
-
-
 _LOGGER = logging.getLogger(__name__)
 
 # Replace with your actual API URL
@@ -44,7 +41,6 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
         # Check if we already have a valid access token
         if self.access_token and self.token_expiry and datetime.utcnow() < self.token_expiry:
             # Token is still valid, no need to refresh
-            _LOGGER.warning("info: Access token is still valid, skipping refresh.")
             return True
         
         # If we don't have a valid token or the token has expired, refresh it
@@ -67,7 +63,6 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
                     self.token_expiry = datetime.utcnow() + timedelta(seconds=data.get("expires_in", 3600))  # Set expiration time
                     # Subtract 5 minutes from the expiration time for a buffer
                     self.token_expiry -= timedelta(minutes=5)
-                    _LOGGER.warning("Info: Access token refreshed successfully.")
                     
                     # store new refresh token in store for persisting after reboot.
                     store = Store(self.hass, version=1, key=f"{DOMAIN}_storage")
@@ -79,7 +74,6 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
 
     
     async def _async_update_data(self):
-        _LOGGER.warning("info: coordinator async_update initiated, refresh_token=%s", self.refresh_token)
         # Ensure the access token is valid and not expired
         if not await self.async_refresh_access_token():
             _LOGGER.error("Failed to refresh access token.")
