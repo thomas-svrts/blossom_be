@@ -20,25 +20,43 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 class BlossomModeSelect(SelectEntity):
     """Representation of a Blossom mode selector."""
 
-    def __init__(self, coordinator: BlossomDataUpdateCoordinator, entry_id: str):
+    def __init__(self, coordinator: BlossomDataUpdateCoordinator, device_id : str):
         """Initialize the select entity."""
         self.coordinator = coordinator
-        self.entry_id = entry_id
-        self._attr_name = "Blossom Mode"
-        self._attr_options = ["solar", "cap"]
-        self._attr_current_option = "solar"  # Default mode
-        self._attr_entity_category = EntityCategory.CONFIG
+        self.device_id  = device_id 
+        self._name = "Charging Mode"
+        self._default_option = "solar"
         
     @property
+    def name(self):
+        return self._name
+        
+    @property
+    def unique_id(self):
+        """Return a unique ID for this entity."""
+        return f"{self.device_id}_mode_selector"
+        
+   @property
+    def options(self):
+        return ["solar", "cap"]
+
+    @property
+    def current_option(self):
+        return self.coordinator.data.get("set_points", {}).get("user_setting_cap_value", self._default_option)
+
+    @property
+    def entity_category(self):
+        return EntityCategory.CONFIG
+
+    @property
     def device_info(self):
-        """Return device information to link the entity to the device."""
-        return {
-            "identifiers": {(DOMAIN, self.entry_id)},  # Link the entity to the device
-            "name": "Blossom Device",
-            "manufacturer": "Blossom",
-            "model": "Charging station",
-        }
-    
+        return DeviceInfo(
+            identifiers={(DOMAIN, self.device_id)},
+            name="Blossom Device",
+            manufacturer="Blossom",
+            model="Charging station",
+        )
+        
     async def async_select_option(self, option: str):
         """Handle the option being changed."""
         if option in self._attr_options:
@@ -52,5 +70,5 @@ class BlossomModeSelect(SelectEntity):
             
             # Call the API to update the mode
             await self.coordinator.update_mode(option, cap_value)
-            self._attr_current_option = option
+            self.coordinator.data["set_points"]["user_setting_cap_value"] = option
             self.async_write_ha_state()  # Notify Home Assistant of the change
