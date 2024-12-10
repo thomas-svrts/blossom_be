@@ -13,8 +13,6 @@ async def async_setup(hass, config):
     return True
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
-    _LOGGER.warning(f"Setup entry with entry_id: {entry.entry_id}")
-
     """Set up Blossom from a config entry."""
     # Load stored data
     store = Store(hass, version=1, key=f"{DOMAIN}_storage")
@@ -22,7 +20,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
     # Check if the refresh token is available in storage
     refresh_token = stored_data.get(CONF_REFRESH_TOKEN) if stored_data else None
-    _LOGGER.warning("info: Refresh token retrieved from store, token=%s", refresh_token)
 
     # Create a coordinator to manage data fetching
     coordinator = BlossomDataUpdateCoordinator(hass, refresh_token)
@@ -33,6 +30,5 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
     # Forward setup for the sensor platform
     await hass.config_entries.async_forward_entry_setups(entry, ["sensor", "select"])
-
 
     return True
