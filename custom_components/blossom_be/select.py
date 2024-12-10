@@ -25,24 +25,11 @@ class BlossomModeSelect(SelectEntity):
         self.coordinator = coordinator
         self.device_id  = device_id 
         self._name = "Charging Mode"
-        self._default_option = "solar"
         
-    @property
-    def name(self):
-        return self._name
-        
-    @property
-    def unique_id(self):
-        """Return a unique ID for this entity."""
-        return f"{self.device_id}_mode_selector"
-        
-    @property
-    def options(self):
-        return ["solar", "cap"]
-
-    @property
-    def current_option(self):
-        return self.coordinator.data.get("set_points", {}).get("user_setting_cap_value", self._default_option)
+        """Initialize the Demo select entity."""
+        self._attr_unique_id = "{self.device_id}_mode_selector"
+        self._attr_current_option = self.coordinator.data.get("set_points", {}).get("user_setting_cap_value", "solar")
+        self._attr_options = ["solar", "cap"]
 
     @property
     def entity_category(self):
@@ -70,5 +57,6 @@ class BlossomModeSelect(SelectEntity):
             
             # Call the API to update the mode
             await self.coordinator.update_mode(option, cap_value)
+            self._attr_current_option = option
             self.coordinator.data["set_points"]["user_setting_cap_value"] = option
             self.async_write_ha_state()  # Notify Home Assistant of the change
