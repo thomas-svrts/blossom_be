@@ -116,7 +116,7 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
         async with aiohttp.ClientSession() as session:
             try:
                 async with session.post(UPDATE_MODE_URL, json=json_data, headers=headers) as response:
-                     if response.status in (200, 201):
+                    if response.status in (200, 201):
                         _LOGGER.info(f"Successfully updated mode to {mode}.")
                     else:
                         _LOGGER.error(f"Error updating mode: {response.status}")
