@@ -69,11 +69,7 @@ class BlossomConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                         return True, response_data  # Access token retrieved successfully
                     else:
                         # Return failure and the server's error response                  
-                        _LOGGER.error(
-                            "Failed to validate refresh token. Status: %s, Response: %s",
-                            resp.status,
-                            response_data
-                        )
+                        _LOGGER.error("Failed to validate refresh token. Status: %s.", resp.status)
                         return False, response_data
             except aiohttp.ClientError as e:
                 # Handle network errors
