@@ -7,8 +7,6 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from .coordinator import BlossomDataUpdateCoordinator
 from homeassistant.config_entries import ConfigEntry
 
-
-
 _LOGGER = logging.getLogger(__name__)
 
 class BlossomSensor(SensorEntity):
@@ -56,7 +54,6 @@ class BlossomSensor(SensorEntity):
         """Update the sensor."""
         await self.coordinator.async_request_refresh()
         
-
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):   
     # Access the coordinator stored in hass.data
     coordinator = hass.data[DOMAIN][entry.entry_id]
@@ -76,7 +73,3 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     ]
     
     async_add_entities(entities)
-
-
-    # Example usage of mode update: You can use this in automations or service calls
-    # coordinator.update_mode("solar")
