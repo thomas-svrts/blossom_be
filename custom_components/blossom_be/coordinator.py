@@ -95,7 +95,7 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
                 # Fetch consumption
                 async with session.get(CONSUMPTION_URL, headers=headers) as consumption_response:
                     self.consumption_data = await consumption_response.json() if consumption_response.status == 200 else None
-                    _LOGGER.warning("Info: consumption_data refreshed successfully.")
+                    _LOGGER.warning("Info: consumption_data refreshed successfully. %s", self.consumption_data)
     
                 # Fetch HEMS data if cache expired
                 if not self.hems_last_fetched or (now - self.hems_last_fetched).seconds > 3600:
