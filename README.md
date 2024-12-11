@@ -32,3 +32,7 @@ Wanneer je dit niet afsluit zal je browser de een tijd later een nieuw refresh t
 
 
 ### Gebruik
+
+Deze integratie kan bijvoorbeeld gebruikt worden om het energie verbruik van je laadpaal op te volgen en weer te geven in je energy dashboard. Daarnaast gebruik ik het ook om de modus van mijn laapaal automatisch te wisselen op basis van de huidige marktprijs. Wanneer de electriciteitsprijs daalt onder een threshold, schakelt mijn laadpaal over naar de standaard modus, bij dure prijzen naar Zon.
+
+<img width="400" alt="Capture" src="https://github.com/user-attachments/assets/a36fc28a-01ad-4390-b456-50d28fea8d15" />
