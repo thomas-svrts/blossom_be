@@ -1,4 +1,3 @@
-
 import logging
 from .const import DOMAIN
 from homeassistant.components.sensor import (
@@ -46,11 +45,12 @@ class BlossomSensor(SensorEntity):
         """Initialize the sensor."""
         self._attr_device_class = device_class
         self._attr_native_unit_of_measurement = unit_of_measurement
+        if unit_of_measurement == UnitOfEnergy.WATT_HOUR:
+            self._attr_suggested_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
         self._attr_native_value = state
         self._attr_state_class = state_class
         self._attr_unique_id = unique_id
         self._attr_name = unique_id
-        self._attr_translation_key = unique_id
         self._attr_entity_category = entity_category
 
         self._attr_device_info = DeviceInfo(
@@ -79,6 +79,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                         SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
         BlossomSensor("current_month_peak", device_id, coordinator.data.get("set_points", {}).get("current_month_peak"), 
                         SensorDeviceClass.POWER, SensorStateClass.MEASUREMENT, UnitOfPower.WATT, None ),   
+        BlossomSensor("carConsumptionWh", device_id, coordinator.data.get("consumption", {}).get("carConsumptionWh"), 
+                        SensorDeviceClass.ENERGY, SensorStateClass.TOTAL, UnitOfEnergy.WATT_HOUR, None ),   
     ]
     
     async_add_entities(entities)
