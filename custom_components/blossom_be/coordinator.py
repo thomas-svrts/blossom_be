@@ -93,8 +93,8 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
                     _LOGGER.warning("Info: set_points_data refreshed successfully.")
                     
                 # Fetch consumption
-                async with session.get(CONSUMPTION_URL, headers=headers) as response:
-                    self.consumption_data = await response.json() if response.status == 200 else None
+                async with session.get(CONSUMPTION_URL, headers=headers) as consumption_response:
+                    self.consumption_data = await consumption_response.json() if consumption_response.status == 200 else None
                     _LOGGER.warning("Info: consumption_data refreshed successfully.")
     
                 # Fetch HEMS data if cache expired
