@@ -49,6 +49,7 @@ class BlossomSensor(SensorEntity):
         self._attr_native_value = state
         self._attr_state_class = state_class
         self._attr_unique_id = unique_id
+        self._attr_name = unique_id
         self._attr_translation_key = unique_id
         self._attr_entity_category = entity_category
 
@@ -57,48 +58,6 @@ class BlossomSensor(SensorEntity):
             name="Charging Station",
             manufacturer="Blossom",
         )
-            
-class BlossomSensor_todelete(SensorEntity):
-    def __init__(self, coordinator, device_id, api, name, key):
-        self.coordinator = coordinator
-        self.device_id = device_id
-        self._api = api
-        self._name = name
-        self._key = key
-
-    @property
-    def name(self):
-        return self._name
-
-    @property
-    def unique_id(self):
-        return f"{self.device_id}_{self._key}"
-
-    @property
-    def native_value(self):
-        _LOGGER.warning("creating native value for %s from api %s.", self._key, self._api)
-        """Return the native value of the sensor."""
-        if not self.coordinator.data:
-            _LOGGER.warning("Coordinator data is None. Returning None for %s.", self._key)
-            return None
-
-        # Fetch either "hems" or "setpoints" data based on the key
-        data_section = self.coordinator.data.get(self._api)
-        if not data_section:
-            _LOGGER.warning("Data section '%s' is None. Returning None for %s.", self._api, self._key)
-            return None    
-        
-        return data_section.get(self._key)
-
-    @property
-    def device_info(self):
-        return DeviceInfo(
-            identifiers={(DOMAIN, self.device_id)},
-            name="Blossom Device",
-            manufacturer="Blossom",
-            model="Charging station",
-        )
-        
     async def async_update(self):
         """Update the sensor."""
         await self.coordinator.async_request_refresh()
