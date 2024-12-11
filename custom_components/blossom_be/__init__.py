@@ -8,10 +8,6 @@ from homeassistant.helpers.storage import Store
 
 _LOGGER = logging.getLogger(__name__)
 
-async def async_setup(hass, config):
-    """Set up the Blossom integration."""
-    return True
-
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up Blossom from a config entry."""
     # Load stored data
@@ -30,5 +26,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
     # Forward setup for the sensor platform
     await hass.config_entries.async_forward_entry_setups(entry, ["sensor", "select"])
+    return True
 
+async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
+    """Unload the integration."""
+    hass.data[DOMAIN].pop(entry.entry_id)
     return True
