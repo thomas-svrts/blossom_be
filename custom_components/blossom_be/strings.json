@@ -8,5 +8,15 @@
     "abort": {
       "single_instance_allowed": "[%key:common::config_flow::abort::single_instance_allowed%]"
     }
+  },
+  "entity": {
+    "sensor": {
+      "peak_solar_capacity": { "name": "Peak solar capacity" },
+      "electricity_contract": { "name": "Electricity contract" },
+      "user_setting_mode": { "name": "Charging mode" },
+      "user_setting_cap_value": { "name": "Charging limit on cap mode" },
+      "min_charge_rate": { "name": "Min charge rate" },
+      "current_month_peak": { "name": "Current monthly peak" }
+    }
   }
 }
