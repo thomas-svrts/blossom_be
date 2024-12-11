@@ -114,8 +114,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                         SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
         BlossomSensor("electricity_contract", device_id, coordinator.data.get("hems", {}).get("electricity_contract"), 
                         None, None, None, EntityCategory.DIAGNOSTIC ),
-        BlossomSensor("user_setting_mode", device_id, coordinator.data.get("set_points", {}).get("user_setting_mode"), 
-                        None, None, None, EntityCategory.CONFIG ),
         BlossomSensor("user_setting_cap_value", device_id, coordinator.data.get("set_points", {}).get("user_setting_cap_value"), 
                         SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
         BlossomSensor("min_charge_rate", device_id, coordinator.data.get("set_points", {}).get("min_charge_rate"), 
