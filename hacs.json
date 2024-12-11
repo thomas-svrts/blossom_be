@@ -1,7 +1,6 @@
 {
 	"name": "Blossom Energy",
 	"country": "BE",
-	"domains": "sensor",
 	"render_readme": true,
 	"homeassistant": "2024.12.0"
 }
