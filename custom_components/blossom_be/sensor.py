@@ -6,10 +6,53 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from .coordinator import BlossomDataUpdateCoordinator
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import (
+    ATTR_BATTERY_LEVEL,
+    CONCENTRATION_PARTS_PER_MILLION,
+    PERCENTAGE,
+    UnitOfEnergy,
+    UnitOfPower,
+    UnitOfTemperature,
+    UnitOfVolume,
+    EntityCategory,
+    UnitOfElectricCurrent,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
 class BlossomSensor(SensorEntity):
+    """Representation of a Demo sensor."""
+
+    _attr_has_entity_name = True
+    _attr_name = None
+    _attr_should_poll = False
+
+    def __init__(
+        self,
+        unique_id: str,
+        device_id: str | None,
+        state: float | str | None,
+        device_class: SensorDeviceClass,
+        state_class: SensorStateClass | None,
+        unit_of_measurement: str | None,
+        entity_category: str | None = None,
+    ) -> None:
+        """Initialize the sensor."""
+        self._attr_device_class = device_class
+        self._attr_native_unit_of_measurement = unit_of_measurement
+        self._attr_native_value = state
+        self._attr_state_class = state_class
+        self._attr_unique_id = unique_id
+        self._attr_translation_key = unique_id
+        self._attr_entity_category = entity_category
+
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, device_id)},
+            name="Charging Station",
+            manufacturer="Blossom",
+        )
+            
+class BlossomSensor_todelete(SensorEntity):
     def __init__(self, coordinator, device_id, api, name, key):
         self.coordinator = coordinator
         self.device_id = device_id
@@ -39,7 +82,7 @@ class BlossomSensor(SensorEntity):
             _LOGGER.warning("Data section '%s' is None. Returning None for %s.", self._api, self._key)
             return None    
         
-        return data_section.get(self._key)
+        return self.coordinator.data.get(self._api, {})data_section.get(self._key)
 
     @property
     def device_info(self):
@@ -61,15 +104,18 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     # Create sensors entities
     device_id = entry.entry_id
     entities = [
-        BlossomSensor(coordinator, device_id, "hems", "Peak Solar Capacity", "peak_solar_capacity"),
-        BlossomSensor(coordinator, device_id, "hems", "Electricity Export Price", "elek_export_price"),
-        BlossomSensor(coordinator, device_id, "hems", "Electricity Import Price", "elek_import_price"),
-        BlossomSensor(coordinator, device_id, "hems", "Electricity Contract", "electricity_contract"),
-        BlossomSensor(coordinator, device_id, "set_points", "User Setting Mode", "user_setting_mode"),
-        BlossomSensor(coordinator, device_id, "set_points", "User Setting Cap Value", "user_setting_cap_value"),
-        BlossomSensor(coordinator, device_id, "set_points", "Min Charge Rate", "min_charge_rate"),
-        BlossomSensor(coordinator, device_id, "set_points", "Max Charge Rate", "max_charge_rate"),
-        BlossomSensor(coordinator, device_id, "set_points", "Current Month Peak", "current_month_peak"),
+        BlossomSensor("peak_solar_capacity", device_id, self.coordinator.data.get("hems", {})data_section.get("peak_solar_capacity"), 
+                        SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
+        BlossomSensor("electricity_contract", device_id, self.coordinator.data.get("hems", {})data_section.get("electricity_contract"), 
+                        None, None, None, EntityCategory.DIAGNOSTIC ),
+        BlossomSensor("user_setting_mode", device_id, self.coordinator.data.get("set_points", {})data_section.get("user_setting_mode"), 
+                        None, None, None, EntityCategory.CONFIG ),
+        BlossomSensor("user_setting_cap_value", device_id, self.coordinator.data.get("set_points", {})data_section.get("user_setting_cap_value"), 
+                        SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
+        BlossomSensor("min_charge_rate", device_id, self.coordinator.data.get("set_points", {})data_section.get("min_charge_rate"), 
+                        SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
+        BlossomSensor("current_month_peak", device_id, self.coordinator.data.get("set_points", {})data_section.get("current_month_peak"), 
+                        SensorDeviceClass.POWER, SensorStateClass.MEASUREMENT, UnitOfPower.WATT, None ),   
     ]
     
     async_add_entities(entities)
