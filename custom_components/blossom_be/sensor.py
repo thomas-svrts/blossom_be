@@ -79,7 +79,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                         SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
         BlossomSensor("current_month_peak", device_id, coordinator.data.get("set_points", {}).get("current_month_peak"), 
                         SensorDeviceClass.POWER, SensorStateClass.MEASUREMENT, UnitOfPower.WATT, None ),   
-        BlossomSensor("carConsumptionWh", device_id, coordinator.data.get("consumption", {}).get("carConsumptionWh"), 
+        BlossomSensor("car_monthly_energy_consumption", device_id, coordinator.data.get("consumption", {}).get("carConsumptionWh"), 
                         SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.WATT_HOUR, None ),   
     ]
     
