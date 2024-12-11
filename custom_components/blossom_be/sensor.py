@@ -47,6 +47,7 @@ class BlossomSensor(SensorEntity):
         self._attr_native_unit_of_measurement = unit_of_measurement
         if unit_of_measurement == UnitOfEnergy.WATT_HOUR:
             self._attr_suggested_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
+            self._attr_suggested_display_precision = 0
         self._attr_native_value = state
         self._attr_state_class = state_class
         self._attr_unique_id = unique_id
