@@ -110,17 +110,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     # Create sensors entities
     device_id = entry.entry_id
     entities = [
-        BlossomSensor("peak_solar_capacity", device_id, self.coordinator.data.get("hems", {}).get("peak_solar_capacity"), 
+        BlossomSensor("peak_solar_capacity", device_id, coordinator.data.get("hems", {}).get("peak_solar_capacity"), 
                         SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
-        BlossomSensor("electricity_contract", device_id, self.coordinator.data.get("hems", {}).get("electricity_contract"), 
+        BlossomSensor("electricity_contract", device_id, coordinator.data.get("hems", {}).get("electricity_contract"), 
                         None, None, None, EntityCategory.DIAGNOSTIC ),
-        BlossomSensor("user_setting_mode", device_id, self.coordinator.data.get("set_points", {}).get("user_setting_mode"), 
+        BlossomSensor("user_setting_mode", device_id, coordinator.data.get("set_points", {}).get("user_setting_mode"), 
                         None, None, None, EntityCategory.CONFIG ),
-        BlossomSensor("user_setting_cap_value", device_id, self.coordinator.data.get("set_points", {}).get("user_setting_cap_value"), 
+        BlossomSensor("user_setting_cap_value", device_id, coordinator.data.get("set_points", {}).get("user_setting_cap_value"), 
                         SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
-        BlossomSensor("min_charge_rate", device_id, self.coordinator.data.get("set_points", {}).get("min_charge_rate"), 
+        BlossomSensor("min_charge_rate", device_id, coordinator.data.get("set_points", {}).get("min_charge_rate"), 
                         SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
-        BlossomSensor("current_month_peak", device_id, self.coordinator.data.get("set_points", {}).get("current_month_peak"), 
+        BlossomSensor("current_month_peak", device_id, coordinator.data.get("set_points", {}).get("current_month_peak"), 
                         SensorDeviceClass.POWER, SensorStateClass.MEASUREMENT, UnitOfPower.WATT, None ),   
     ]
     
