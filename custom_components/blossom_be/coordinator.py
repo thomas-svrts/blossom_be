@@ -106,7 +106,7 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
                 else:
                     _LOGGER.warning("Info: hems not refreshed, still up to date. Last refresh %s seconds ago.", (now - self.hems_last_fetched).seconds)
     
-                return {"set_points": self.set_points_data, "hems": self.hems_data, "consumption": self.consumption }
+                return {"set_points": self.set_points_data, "hems": self.hems_data, "consumption": self.consumption_data }
             except Exception as err:
                 _LOGGER.error(f"Error fetching data from Blossom: {err}")
                 return None
