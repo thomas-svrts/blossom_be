@@ -27,7 +27,7 @@ class BlossomModeSelect(SelectEntity):
         self._name = "Charging Mode"
         
         """Initialize the Demo select entity."""
-        self._attr_unique_id = f"Blossom_mode_selector"
+        self._attr_unique_id = f"mode_selector"
         self._attr_current_option = self.coordinator.data.get("set_points", {}).get("user_setting_mode", "solar")
         self._attr_options = ["solar", "cap"]
 
@@ -39,9 +39,8 @@ class BlossomModeSelect(SelectEntity):
     def device_info(self):
         return DeviceInfo(
             identifiers={(DOMAIN, self.device_id)},
-            name="Blossom Device",
+            name="Charging Station",
             manufacturer="Blossom",
-            model="Charging station",
         )
         
     async def async_select_option(self, option: str):
