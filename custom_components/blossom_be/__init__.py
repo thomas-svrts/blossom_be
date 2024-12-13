@@ -36,5 +36,9 @@ async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry):
         hass.data[DOMAIN].pop(config_entry.entry_id, None)
 
     # Unload forwarded platforms
-    unload_ok = await hass.config_entries.async_forward_entry_unload(config_entry, PLATFORMS)
+    unload_ok = all(
+        await hass.config_entries.async_forward_entry_unload(config_entry, platform)
+        for platform in PLATFORMS
+    )
+
     return unload_ok
