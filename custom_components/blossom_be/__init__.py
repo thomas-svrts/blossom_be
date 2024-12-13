@@ -7,9 +7,13 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.storage import Store
 
 _LOGGER = logging.getLogger(__name__)
+PLATFORMS = ["sensor", "select"]
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
-    """Set up Blossom from a config entry."""
+async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
+    """Set up the integration from a config entry."""
+    if DOMAIN in hass.data and config_entry.entry_id in hass.data[DOMAIN]:
+        return True
+
     # Load stored data
     store = Store(hass, version=1, key=f"{DOMAIN}_storage")
     stored_data = await store.async_load()
@@ -17,18 +21,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     # Check if the refresh token is available in storage
     refresh_token = stored_data.get(CONF_REFRESH_TOKEN) if stored_data else None
 
-    # Create a coordinator to manage data fetching
-    coordinator = BlossomDataUpdateCoordinator(hass, refresh_token)
-    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
-
     # Perform the first data fetch
+    coordinator = BlossomDataUpdateCoordinator(hass, refresh_token)
+    hass.data.setdefault(DOMAIN, {})[config_entry.entry_id] = coordinator    
     await coordinator.async_config_entry_first_refresh()
 
-    # Forward setup for the sensor platform
-    await hass.config_entries.async_forward_entry_setups(entry, ["sensor", "select"])
+    # Forward setup to platforms
+    await hass.config_entries.async_forward_entry_setups(config_entry, PLATFORMS)
     return True
 
-async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
-    """Unload the integration."""
-    hass.data[DOMAIN].pop(entry.entry_id)
-    return True
+async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry):
+    """Unload a config entry."""
+    if DOMAIN in hass.data:
+        hass.data[DOMAIN].pop(config_entry.entry_id, None)
+
+    # Unload forwarded platforms
+    unload_ok = await hass.config_entries.async_forward_entry_unload(config_entry, PLATFORMS)
+    return unload_ok
