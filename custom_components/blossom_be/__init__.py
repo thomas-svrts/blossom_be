@@ -1,5 +1,6 @@
 # __init__.py
 import logging
+import asyncio
 from .const import DOMAIN, CONF_REFRESH_TOKEN
 from .coordinator import BlossomDataUpdateCoordinator
 from homeassistant.core import HomeAssistant
