@@ -14,7 +14,7 @@ SET_POINTS_URL = "https://api.blossom.be/api/hems/set-points"
 HEMS_URL = "https://api.blossom.be/api/hems"
 CONSUMPTION_URL = "https://api.blossom.be/api/hems/energy-consumption"
 UPDATE_MODE_URL = "https://api.blossom.be/api/hems/set-points"
-SESSION_URL = "https://api.blossom.be/api/hems/home-charging-session
+SESSION_URL = "https://api.blossom.be/api/hems/home-charging-session"
 AUTH_URL = "https://blossom-production.eu.auth0.com/oauth/token"
 CLIENT_ID = "RTofmsbiLPSlisRHtIFohGRPBcGgrIrs"
 
