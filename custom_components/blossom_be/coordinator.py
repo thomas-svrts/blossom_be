@@ -26,7 +26,7 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
             hass,
             _LOGGER,
             name="{DOMAIN}_coordinator",
-            update_interval=timedelta(minutes=10),  # Update every 10 minutes
+            update_interval=timedelta(minutes=1),  # Update every 10 minutes
         )
         _LOGGER.debug("Init coordinator")
         self.hass = hass
