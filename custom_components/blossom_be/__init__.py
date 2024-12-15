@@ -11,6 +11,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["sensor", "select"]
 
 async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
+    _LOGGER.debug("Setup entry component.")
     """Set up the integration from a config entry."""
     if DOMAIN in hass.data and config_entry.entry_id in hass.data[DOMAIN]:
         return True
@@ -33,6 +34,7 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
 
 async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry):
     """Unload a config entry."""
+    _LOGGER.debug("Unload entry component.")
     if DOMAIN in hass.data:
         hass.data[DOMAIN].pop(config_entry.entry_id, None)
 
