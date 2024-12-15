@@ -81,6 +81,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         BlossomSensor(coordinator, "min_charge_rate", device_id,        "set_points",  "min_charge_rate",         SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
         BlossomSensor(coordinator, "current_month_peak", device_id,     "set_points",  "current_month_peak",      SensorDeviceClass.POWER, SensorStateClass.MEASUREMENT, UnitOfPower.WATT, None ),   
         BlossomSensor(coordinator, "monthly_energy_consumption", device_id, "consumption", "carConsumptionWh",    SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.WATT_HOUR, None ),   
+        BlossomSensor(coordinator, "session_status", device_id, "home-charging-session", "session.status",    None, None, None, None ),   
+        BlossomSensor(coordinator, "home_charging_status", device_id, "home-charging-session", "status",    None, None, None, None ),   
     ]
     
     async_add_entities(entities)
