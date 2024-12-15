@@ -63,6 +63,10 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
         def native_value(self):
             """Return the current state."""
             return self.coordinator.data.get(api, {}).get(parameter)
+            
+        async def async_update(self):
+            _LOGGER.debug("Update Blosomsensor: %s.", self._attr_unique_id)
+            await super().async_update()  # Calls the coordinator's refresh logic
         
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):   
     _LOGGER.debug("Setup_entry sensor platform.")
