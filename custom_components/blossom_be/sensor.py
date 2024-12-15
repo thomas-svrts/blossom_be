@@ -40,7 +40,7 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
         entity_category: str | None = None,
     ) -> None:
         super().__init__(coordinator)
-        _LOGGER.debug("Init Blosomsensor: %s, api: %s, parameter: %s", unique_id, api, parameter)
+        _LOGGER.debug("Init Blosomsensor: %s, parameter: %s", unique_id, parameter)
         """Initialize the sensor."""
         self._attr_device_class = device_class
         self._attr_native_unit_of_measurement = unit_of_measurement
