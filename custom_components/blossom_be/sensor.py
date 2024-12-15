@@ -25,11 +25,12 @@ from homeassistant.const import (
 
 _LOGGER = logging.getLogger(__name__)
 
-class BlossomSensor(SensorEntity):
+class BlossomSensor(CoordinatorEntity, SensorEntity):
     """Representation of a Demo sensor."""
 
     def __init__(
         self,
+        coordinator: BlossomDataUpdateCoordinator,
         unique_id: str,
         device_id: str | None,
         state: float | str | None,
@@ -38,6 +39,7 @@ class BlossomSensor(SensorEntity):
         unit_of_measurement: str | None,
         entity_category: str | None = None,
     ) -> None:
+        super().__init__(coordinator)
         _LOGGER.debug("Init Blosomsensor: %s.", unique_id)
         """Initialize the sensor."""
         self._attr_device_class = device_class
@@ -69,17 +71,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     # Create sensors entities
     device_id = entry.entry_id
     entities = [
-        BlossomSensor("peak_solar_capacity", device_id, coordinator.data.get("hems", {}).get("peak_solar_capacity"), 
+        BlossomSensor(coordinator, "peak_solar_capacity", device_id, coordinator.data.get("hems", {}).get("peak_solar_capacity"), 
                         SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
-        BlossomSensor("electricity_contract", device_id, coordinator.data.get("hems", {}).get("electricity_contract"), 
+        BlossomSensor(coordinator, "electricity_contract", device_id, coordinator.data.get("hems", {}).get("electricity_contract"), 
                         None, None, None, EntityCategory.DIAGNOSTIC ),
-        BlossomSensor("user_setting_cap_value", device_id, coordinator.data.get("set_points", {}).get("user_setting_cap_value"), 
+        BlossomSensor(coordinator, "user_setting_cap_value", device_id, coordinator.data.get("set_points", {}).get("user_setting_cap_value"), 
                         SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
-        BlossomSensor("min_charge_rate", device_id, coordinator.data.get("set_points", {}).get("min_charge_rate"), 
+        BlossomSensor(coordinator, "min_charge_rate", device_id, coordinator.data.get("set_points", {}).get("min_charge_rate"), 
                         SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
-        BlossomSensor("current_month_peak", device_id, coordinator.data.get("set_points", {}).get("current_month_peak"), 
+        BlossomSensor(coordinator, "current_month_peak", device_id, coordinator.data.get("set_points", {}).get("current_month_peak"), 
                         SensorDeviceClass.POWER, SensorStateClass.MEASUREMENT, UnitOfPower.WATT, None ),   
-        BlossomSensor("car_monthly_energy_consumption", device_id, coordinator.data.get("consumption", {}).get("carConsumptionWh"), 
+        BlossomSensor(coordinator, "car_monthly_energy_consumption", device_id, coordinator.data.get("consumption", {}).get("carConsumptionWh"), 
                         SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.WATT_HOUR, None ),   
     ]
     
