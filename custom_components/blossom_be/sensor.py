@@ -28,10 +28,6 @@ _LOGGER = logging.getLogger(__name__)
 class BlossomSensor(SensorEntity):
     """Representation of a Demo sensor."""
 
-    _attr_has_entity_name = True
-    _attr_name = None
-    _attr_should_poll = False
-
     def __init__(
         self,
         unique_id: str,
