@@ -53,21 +53,21 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
         self._attr_name = unique_id
         self._attr_entity_category = entity_category
         
-        @property
-        def native_value(self) -> str:
-            """Return the current state."""
-            _LOGGER.debug("setting native value for blossomsensor. API: %s & parameter: %s", api, parameter)
-            return self.coordinator.data.get(api, {}).get(parameter)
-
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, device_id)},
             name="Charging Station",
             manufacturer="Blossom",
         )
         
-        async def async_update(self):
-            _LOGGER.debug("Update Blosomsensor: %s.", self._attr_unique_id)
-            await super().async_update()  # Calls the coordinator's refresh logic
+    @property
+    def native_value(self) -> str:
+        """Return the current state."""
+        _LOGGER.debug("setting native value for blossomsensor. API: %s & parameter: %s", api, parameter)
+        return self.coordinator.data.get(api, {}).get(parameter)
+  
+    async def async_update(self):
+        _LOGGER.debug("Update Blosomsensor: %s.", self._attr_unique_id)
+        await super().async_update()  # Calls the coordinator's refresh logic
         
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):   
     _LOGGER.debug("Setup_entry sensor platform.")
