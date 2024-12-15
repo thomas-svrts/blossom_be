@@ -58,10 +58,6 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
             name="Charging Station",
             manufacturer="Blossom",
         )
-    async def async_update(self):
-        _LOGGER.debug("Update Blossomsensor")
-        """Update the sensor."""
-        await self.coordinator.async_request_refresh()
         
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):   
     _LOGGER.debug("Setup_entry sensor platform.")
