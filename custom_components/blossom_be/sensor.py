@@ -33,7 +33,8 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
         coordinator: BlossomDataUpdateCoordinator,
         unique_id: str,
         device_id: str | None,
-        state: float | str | None,
+        api: str | None,
+        parameter: str | None,
         device_class: SensorDeviceClass,
         state_class: SensorStateClass | None,
         unit_of_measurement: str | None,
@@ -47,7 +48,6 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
         if unit_of_measurement == UnitOfEnergy.WATT_HOUR:
             self._attr_suggested_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
             self._attr_suggested_display_precision = 0
-        self._attr_native_value = state
         self._attr_state_class = state_class
         self._attr_unique_id = unique_id
         self._attr_name = unique_id
@@ -59,6 +59,11 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
             manufacturer="Blossom",
         )
         
+        @property
+        def native_value(self):
+            """Return the current state."""
+            return self.coordinator.data.get(api, {}).get(parameter)
+        
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):   
     _LOGGER.debug("Setup_entry sensor platform.")
     # Access the coordinator stored in hass.data
@@ -67,18 +72,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     # Create sensors entities
     device_id = entry.entry_id
     entities = [
-        BlossomSensor(coordinator, "peak_solar_capacity", device_id, coordinator.data.get("hems", {}).get("peak_solar_capacity"), 
-                        SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
-        BlossomSensor(coordinator, "electricity_contract", device_id, coordinator.data.get("hems", {}).get("electricity_contract"), 
-                        None, None, None, EntityCategory.DIAGNOSTIC ),
-        BlossomSensor(coordinator, "user_setting_cap_value", device_id, coordinator.data.get("set_points", {}).get("user_setting_cap_value"), 
-                        SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
-        BlossomSensor(coordinator, "min_charge_rate", device_id, coordinator.data.get("set_points", {}).get("min_charge_rate"), 
-                        SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
-        BlossomSensor(coordinator, "current_month_peak", device_id, coordinator.data.get("set_points", {}).get("current_month_peak"), 
-                        SensorDeviceClass.POWER, SensorStateClass.MEASUREMENT, UnitOfPower.WATT, None ),   
-        BlossomSensor(coordinator, "car_monthly_energy_consumption", device_id, coordinator.data.get("consumption", {}).get("carConsumptionWh"), 
-                        SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.WATT_HOUR, None ),   
+        BlossomSensor(coordinator, "peak_solar_capacity", device_id,    "hems",        "peak_solar_capacity",     SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
+        BlossomSensor(coordinator, "electricity_contract", device_id,   "hems",        "electricity_contract",    None, None, None, EntityCategory.DIAGNOSTIC ),
+        BlossomSensor(coordinator, "user_setting_cap_value", device_id, "set_points",  "user_setting_cap_value",  SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
+        BlossomSensor(coordinator, "min_charge_rate", device_id,        "set_points",  "min_charge_rate",         SensorDeviceClass.POWER, None, UnitOfPower.WATT, EntityCategory.DIAGNOSTIC ),
+        BlossomSensor(coordinator, "current_month_peak", device_id,     "set_points",  "current_month_peak",      SensorDeviceClass.POWER, SensorStateClass.MEASUREMENT, UnitOfPower.WATT, None ),   
+        BlossomSensor(coordinator, "monthly_energy_consumption", device_id, "consumption", "carConsumptionWh",    SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.WATT_HOUR, None ),   
     ]
     
     async_add_entities(entities)
