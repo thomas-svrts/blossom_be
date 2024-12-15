@@ -42,6 +42,7 @@ class BlossomSensor(SensorEntity):
         unit_of_measurement: str | None,
         entity_category: str | None = None,
     ) -> None:
+        _LOGGER.debug("Init Blosomsensor: %s.", unique_id)
         """Initialize the sensor."""
         self._attr_device_class = device_class
         self._attr_native_unit_of_measurement = unit_of_measurement
@@ -60,10 +61,12 @@ class BlossomSensor(SensorEntity):
             manufacturer="Blossom",
         )
     async def async_update(self):
+        _LOGGER.debug("Update Blossomsensor")
         """Update the sensor."""
         await self.coordinator.async_request_refresh()
         
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):   
+    _LOGGER.debug("Setup_entry sensor platform.")
     # Access the coordinator stored in hass.data
     coordinator = hass.data[DOMAIN][entry.entry_id]
     
