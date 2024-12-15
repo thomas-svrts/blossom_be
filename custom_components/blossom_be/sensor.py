@@ -62,6 +62,7 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
         @property
         def native_value(self):
             """Return the current state."""
+            _LOGGER.debug("setting native value for blossomsensor. API: %s & parameter: %s", api, parameter)
             return self.coordinator.data.get(api, {}).get(parameter)
             
         async def async_update(self):
