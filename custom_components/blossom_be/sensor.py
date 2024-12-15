@@ -52,6 +52,8 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
         self._attr_unique_id = unique_id
         self._attr_name = unique_id
         self._attr_entity_category = entity_category
+        self._api= api
+        self._parameter= parameter
         
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, device_id)},
@@ -62,8 +64,8 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
     @property
     def native_value(self) -> str:
         """Return the current state."""
-        _LOGGER.debug("setting native value for blossomsensor. API: %s & parameter: %s", api, parameter)
-        return self.coordinator.data.get(api, {}).get(parameter)
+        _LOGGER.debug("setting native value for blossomsensor. API: %s & parameter: %s", self._api, self._parameter)
+        return self.coordinator.data.get(self._api, {}).get(self._parameter)
   
     async def async_update(self):
         _LOGGER.debug("Update Blosomsensor: %s.", self._attr_unique_id)
