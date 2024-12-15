@@ -47,6 +47,8 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
         if unit_of_measurement == UnitOfEnergy.WATT_HOUR:
             self._attr_suggested_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
             self._attr_suggested_display_precision = 0
+        if unit_of_measurement == UnitOfEnergy.KILO_WATT_HOUR:
+            self._attr_suggested_display_precision = 2
         self._attr_state_class = state_class
         self._attr_unique_id = unique_id
         self._attr_name = unique_id
@@ -60,7 +62,7 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
         )
         
     @property
-    def native_value(self) -> str | None:
+    def native_value(self) -> str | datetime | None:
         """Return the current state."""
         # Get the full data structure from the coordinator
         data = self.coordinator.data
@@ -76,7 +78,9 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
                 # If the key path is invalid or not a dict, return None
                 _LOGGER.warning("Invalid key path: %s", self._parameter)
                 return None
-    
+
+        if (self._parameter == "home-charging-session.session.time_started_session"):
+            return datetime.fromisoformat(data)
         return data
 
   
@@ -96,7 +100,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         BlossomSensor(coordinator, "current_month_peak", device_id,     "set_points.current_month_peak",      SensorDeviceClass.POWER, SensorStateClass.MEASUREMENT, UnitOfPower.WATT, None ),   
         BlossomSensor(coordinator, "monthly_energy_consumption", device_id, "consumption.carConsumptionWh",    SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.WATT_HOUR, None ),   
         BlossomSensor(coordinator, "session_status", device_id,         "home-charging-session.session.status",    None, None, None, None ),   
-        BlossomSensor(coordinator, "session_consumption", device_id,    "home-charging-session.session.kWh",    SensorDeviceClass.ENERGY, SensorStateClass.MEASUREMENT, UnitOfEnergy.KILO_WATT_HOUR, None ),   
+        BlossomSensor(coordinator, "session_consumption", device_id,    "home-charging-session.session.kWh",    SensorDeviceClass.ENERGY, SensorStateClass.TOTAL, UnitOfEnergy.KILO_WATT_HOUR, None ),   
         BlossomSensor(coordinator, "session_start", device_id,          "home-charging-session.session.time_started_session",    SensorDeviceClass.TIMESTAMP, None, None, None ),
         BlossomSensor(coordinator, "home_charging_status", device_id,   "home-charging-session.status",    None, None, None, None ),   
     ]
