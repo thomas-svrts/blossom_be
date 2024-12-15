@@ -87,7 +87,7 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
         """Fetch data from Blossom API."""
         headers = {"Authorization": f"Bearer {self.access_token}"}
         now = datetime.utcnow
-        _LOGGER.debug("coordinator: update_data triggered at %s.", now)
+        _LOGGER.debug("coordinator: update_data triggered.")
         
         async with aiohttp.ClientSession() as session:
             try:
