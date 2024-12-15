@@ -28,6 +28,7 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
             name="{DOMAIN}_coordinator",
             update_interval=timedelta(minutes=10),  # Update every 10 minutes
         )
+        _LOGGER.debug("Init coordinator")
         self.hass = hass
         self.refresh_token = refresh_token
         self.access_token = None
@@ -43,11 +44,12 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
         # Check if we already have a valid access token
         if self.access_token and self.token_expiry and datetime.utcnow() < self.token_expiry:
             # Token is still valid, no need to refresh
+            _LOGGER.debug("Access token stil valid.")
             return True
         
         # If we don't have a valid token or the token has expired, refresh it
         if not self.refresh_token:
-            _LOGGER.error("No refresh token available, cannot refresh access token.")
+            _LOGGER.debug("No refresh token available, cannot refresh access token.")
             return None
 
         """Fetch a new access token using the refresh token."""
@@ -69,6 +71,7 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
                     # store new refresh token in store for persisting after reboot.
                     store = Store(self.hass, version=1, key=f"{DOMAIN}_storage")
                     await store.async_save({CONF_REFRESH_TOKEN: self.refresh_token})  
+                    _LOGGER.debug("Refresh token stored to store.")
                 else:
                     _LOGGER.error("Failed to refresh access token: %s", response.status)
                     raise Exception("Authentication error")
@@ -83,28 +86,29 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
         
         """Fetch data from Blossom API."""
         headers = {"Authorization": f"Bearer {self.access_token}"}
-        now = datetime.utcnow()
+        now = datetime.utcnow
+        _LOGGER.debug("coordinator: update_data triggered at %s.", now)
         
         async with aiohttp.ClientSession() as session:
             try:
                 # Fetch set_points
                 async with session.get(SET_POINTS_URL, headers=headers) as response:
                     self.set_points_data = await response.json() if response.status == 200 else None
-                    _LOGGER.warning("Info: set_points_data refreshed successfully.")
+                    _LOGGER.debug("Info: set_points_data refreshed successfully.")
                     
                 # Fetch consumption
                 async with session.get(CONSUMPTION_URL, headers=headers) as consumption_response:
                     self.consumption_data = await consumption_response.json() if consumption_response.status == 200 else None
-                    _LOGGER.warning("Info: consumption_data refreshed successfully.")
+                    _LOGGER.debug("Info: consumption_data refreshed successfully.")
     
                 # Fetch HEMS data if cache expired
                 if not self.hems_last_fetched or (now - self.hems_last_fetched).seconds > 3600:
                     async with session.get(HEMS_URL, headers=headers) as hems_response:
                         self.hems_data = await hems_response.json() if hems_response.status == 200 else None
                         self.hems_last_fetched = now
-                        _LOGGER.warning("Info: hems refreshed successfully")
+                        _LOGGER.debug("Info: hems refreshed successfully")
                 else:
-                    _LOGGER.warning("Info: hems not refreshed, still up to date. Last refresh %s seconds ago.", (now - self.hems_last_fetched).seconds)
+                    _LOGGER.debug("Info: hems not refreshed, still up to date. Last refresh %s seconds ago.", (now - self.hems_last_fetched).seconds)
     
                 return {"set_points": self.set_points_data, "hems": self.hems_data, "consumption": self.consumption_data }
             except Exception as err:
