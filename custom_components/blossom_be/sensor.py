@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime
+from typing import Any
 from .const import DOMAIN
 from homeassistant.components.sensor import (
     RestoreSensor,
