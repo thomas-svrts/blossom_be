@@ -77,6 +77,9 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
         for key in keys:
             if isinstance(data, dict):
                 data = data.get(key)
+            elif isinstance(data, list):
+                key = int(key)  # Convert key to integer for list indexing
+                data = data[key]
             else:
                 # If session is missing, return None or handle it
                 if previous_key == "session" and data is None:
@@ -90,6 +93,7 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
                 
             # Update previous_key for the next iteration
             previous_key = key
+    
     
         # If this is a timestamp field, convert to datetime
         if self._parameter == "home-charging-session.session.time_started_session":
@@ -141,6 +145,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         BlossomSensor(coordinator, "session_consumption", device_id,    "home-charging-session.session.kWh",    SensorDeviceClass.ENERGY, SensorStateClass.TOTAL, UnitOfEnergy.KILO_WATT_HOUR, None ),   
         BlossomSensor(coordinator, "session_start", device_id,          "home-charging-session.session.time_started_session",    SensorDeviceClass.TIMESTAMP, None, None, None ),
         BlossomSensor(coordinator, "home_charging_status", device_id,   "home-charging-session.status",    None, None, None, None ),   
+        
+        BlossomSensor(coordinator, "energy_component_price", device_id,  "devices.0.device.charging_points.0.pricing_policy.energy_components.0.price",    SensorDeviceClass.MONETARY, None, "EUR", None ),   
+
+        self._parameter = ""
+
     ]
     
     async_add_entities(entities)
