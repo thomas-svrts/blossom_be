@@ -147,9 +147,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         BlossomSensor(coordinator, "home_charging_status", device_id,   "home-charging-session.status",    None, None, None, None ),   
         
         BlossomSensor(coordinator, "energy_component_price", device_id,  "devices.0.device.charging_points.0.pricing_policy.energy_components.0.price",    SensorDeviceClass.MONETARY, None, "EUR", None ),   
-
-        self._parameter = ""
-
     ]
     
     async_add_entities(entities)
