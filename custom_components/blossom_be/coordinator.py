@@ -15,6 +15,7 @@ HEMS_URL = "https://api.blossom.be/api/hems"
 CONSUMPTION_URL = "https://api.blossom.be/api/hems/energy-consumption"
 UPDATE_MODE_URL = "https://api.blossom.be/api/hems/set-points"
 SESSION_URL = "https://api.blossom.be/api/hems/home-charging-session"
+DEVICES_URL = "https://api.blossom.be/api/optimile/devices"
 AUTH_URL = "https://blossom-production.eu.auth0.com/oauth/token"
 CLIENT_ID = "RTofmsbiLPSlisRHtIFohGRPBcGgrIrs"
 
@@ -39,6 +40,7 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
         self.set_points_data = None    # Initialize set_points data
         self.consumption_data = None
         self.session_data = None
+        self.devices_data = None
         
     async def async_refresh_access_token(self):
         """Refresh the access token only if it has expired."""
@@ -110,14 +112,19 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
                     
                 # Fetch HEMS data if cache expired
                 if not self.hems_last_fetched or (now - self.hems_last_fetched).seconds > 3600:
+                    #fetch hems
                     async with session.get(HEMS_URL, headers=headers) as hems_response:
                         self.hems_data = await hems_response.json() if hems_response.status == 200 else None
                         self.hems_last_fetched = now
                         _LOGGER.debug("Info: hems refreshed successfully")
+                    #fetch devices
+                    async with session.get(DEVICES_URL, headers=headers) as devices_response:
+                        self.devices_data = await devices_response.json() if devices_response.status == 200 else None
+                        _LOGGER.debug("Info: devices_data refreshed successfully.")
                 else:
-                    _LOGGER.debug("Info: hems not refreshed, still up to date. Last refresh %s seconds ago.", (now - self.hems_last_fetched).seconds)
+                    _LOGGER.debug("Info: hems/devices not refreshed, still up to date. Last refresh %s seconds ago.", (now - self.hems_last_fetched).seconds)
     
-                return {"set_points": self.set_points_data, "hems": self.hems_data, "consumption": self.consumption_data, "home-charging-session": self.session_data }
+                return {"set_points": self.set_points_data, "hems": self.hems_data, "consumption": self.consumption_data, "home-charging-session": self.session_data, "devices": self.devices_data }
             except Exception as err:
                 _LOGGER.error(f"Error fetching data from Blossom: {err}")
                 return None
