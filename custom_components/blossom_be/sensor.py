@@ -77,6 +77,11 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
             if isinstance(data, dict):
                 data = data.get(key)
             else:
+                # If session is missing, return None or handle it
+                if key == "session" and data is None:
+                    _LOGGER.debug("No session data; station status is '%s'.", 
+                                  self.coordinator.data.get("home-charging-session", {}).get("status"))
+                    return None
                 # If the key path is invalid or not a dict, return None
                 _LOGGER.warning("Invalid key path: %s", self._parameter)
                 return None
