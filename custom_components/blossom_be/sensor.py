@@ -71,20 +71,25 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
     
         # Split the _parameter by dots (e.g., "home-charging-session.session.status")
         keys = self._parameter.split(".")
-    
+
+        previous_key = None  # Initialize to track the parent key
         # Traverse the data using the keys
         for key in keys:
             if isinstance(data, dict):
                 data = data.get(key)
             else:
                 # If session is missing, return None or handle it
-                if key == "session" and data is None:
+                if previous_key == "session" and data is None:
                     _LOGGER.debug("No session data; station status is '%s'.", 
                                   self.coordinator.data.get("home-charging-session", {}).get("status"))
                     return None
+                    
                 # If the key path is invalid or not a dict, return None
                 _LOGGER.warning("Invalid key path: %s", self._parameter)
                 return None
+                
+            # Update previous_key for the next iteration
+            previous_key = key
     
         # If this is a timestamp field, convert to datetime
         if self._parameter == "home-charging-session.session.time_started_session":
