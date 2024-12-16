@@ -79,12 +79,38 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
                 # If the key path is invalid or not a dict, return None
                 _LOGGER.warning("Invalid key path: %s", self._parameter)
                 return None
-
-        if (self._parameter == "home-charging-session.session.time_started_session"):
+    
+        # If this is a timestamp field, convert to datetime
+        if self._parameter == "home-charging-session.session.time_started_session":
             return datetime.fromisoformat(data)
+    
+        # If this is the session status field, handle splitting
+        if self._parameter == "home-charging-session.session.status" and isinstance(data, str):
+            # Store the full value for attributes
+            self._full_status = data
+    
+            # Split the value and return only the status
+            parts = data.split("; info: ")
+            if len(parts) > 1:
+                return parts[0].strip()  # Return just the status
+    
+        # Default return: raw data
         return data
-
-  
+        
+    @property
+    def extra_state_attributes(self) -> dict[str, Any] | None:
+        """Return extra state attributes."""
+        attributes = {}
+    
+        # Split and add status and info if _full_status is existing
+        if hasattr(self, "_full_status") and isinstance(self._full_status, str):
+            parts = self._full_status.split("; info: ")
+            if len(parts) > 1:
+                attributes["status"] = parts[0].strip()
+                attributes["info"] = parts[1].strip()
+                
+        return attributes
+      
         
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):   
     _LOGGER.debug("Setup_entry sensor platform.")
