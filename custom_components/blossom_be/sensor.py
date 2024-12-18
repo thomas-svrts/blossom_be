@@ -100,7 +100,7 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
             return datetime.fromisoformat(data)
     
         # If this is the session status field, handle splitting
-        if self._parameter == "home-charging-session.session.status" and isinstance(data, str):
+        if self._parameter == "home-charging-session.status" and isinstance(data, str):
             # Store the full value for attributes
             self._full_status = data
     
