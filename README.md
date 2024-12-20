@@ -36,9 +36,9 @@ Wanneer je dit niet afsluit zal je browser de een tijd later een nieuw refresh t
 
 ### Gebruik
 
-Deze integratie kan bijvoorbeeld gebruikt worden om het energie verbruik van je laadpaal op te volgen en weer te geven in je energy dashboard. Daarnaast gebruik ik het ook om de modus van mijn laadpaal automatisch te wisselen op basis van de huidige marktprijs. Wanneer de electriciteitsprijs daalt onder een threshold, schakelt mijn laadpaal over naar de standaard modus, bij dure prijzen naar Zon.
+Deze integratie kan bijvoorbeeld gebruikt worden om het energie verbruik van je laadpaal op te volgen en weer te geven in je energy dashboard (gebruik hierboor sensor.session_consumption, deze is near realtime.). Daarnaast gebruik ik het ook om de modus van mijn laadpaal automatisch te wisselen op basis van de huidige marktprijs. Wanneer de electriciteitsprijs daalt onder een threshold, schakelt mijn laadpaal over naar de standaard modus, bij dure prijzen naar Zon.
 
-<img width="400" alt="Capture" src="https://github.com/user-attachments/assets/a36fc28a-01ad-4390-b456-50d28fea8d15" />
+<img width="400" alt="Capture" src="https://github.com/user-attachments/assets/2b9a2f19-f5e2-4774-82fa-0ce5be89396f" />
 
 
 ![image](https://github.com/user-attachments/assets/0297f6a7-7824-4d7d-90fc-19dc8ed19bf3)
