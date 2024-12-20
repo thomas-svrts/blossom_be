@@ -3,6 +3,8 @@
 # Blossom.be Custom Component voor Home Assistant
 Met deze integratie wordt de informatie van Blossom.be beschikbaar gemaakt binnen Home Assistant.
 
+## Installatie
+Implement translations
 
 ## Installatie
 Plaats de map `blossom_be` uit de map `custom_components` binnen deze repo in de `custom_components` map van je Home Assistant installatie.
@@ -37,3 +39,6 @@ Wanneer je dit niet afsluit zal je browser de een tijd later een nieuw refresh t
 Deze integratie kan bijvoorbeeld gebruikt worden om het energie verbruik van je laadpaal op te volgen en weer te geven in je energy dashboard. Daarnaast gebruik ik het ook om de modus van mijn laadpaal automatisch te wisselen op basis van de huidige marktprijs. Wanneer de electriciteitsprijs daalt onder een threshold, schakelt mijn laadpaal over naar de standaard modus, bij dure prijzen naar Zon.
 
 <img width="400" alt="Capture" src="https://github.com/user-attachments/assets/a36fc28a-01ad-4390-b456-50d28fea8d15" />
+
+
+![image](https://github.com/user-attachments/assets/0297f6a7-7824-4d7d-90fc-19dc8ed19bf3)
