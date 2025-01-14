@@ -1,17 +1,20 @@
 {
     "entity": {
         "sensor": {
-            "peak_solar_capacity": "Piekvermogen zonnepanelen",
-            "electricity_contract": "Elektriciteitscontract",
-            "user_setting_cap_value": "Gebruikersinstelling Capaciteitswaarde",
-            "min_charge_rate": "Minimale Laadsnelheid",
-            "current_month_peak": "Huidige Maandpiek",
-            "monthly_energy_consumption": "Maandelijkse Energieverbruik",
-            "session_status": "Sessie Status",
-            "session_consumption": "Sessie Verbruik",
-            "session_start": "Starttijd Sessie",
-            "home_charging_status": "Status Thuisladen",
-            "energy_component_price": "Prijs Energiecomponent"
+
+              "peak_solar_capacity": { "name": "Piekvermogen zonnepanelen" },
+      "electricity_contract": { "name": "Elektriciteitscontract" },
+      "user_setting_mode": { "name": "Charging mode" },
+      "user_setting_cap_value": { "name": "Gebruikersinstelling Capaciteitswaarde" },
+      "min_charge_rate": { "name": "Minimaal Laadvermogen" },
+      "current_month_peak": { "name": "Huidige Maandpiek" },
+        "monthly_energy_consumption": { "name": "Maandelijkse Energieverbruik"},
+        "session_status": { "name": "Sessie Status"},
+        "session_consumption": { "name": "Sessie Verbruik"},
+        "session_start": { "name": "Starttijd Sessie"},
+        "home_charging_status": { "name": "Status Thuisladen"},
+        "energy_component_price": { "name": "Prijs Energiecomponent"}
+
         }
     },
     "config": {
