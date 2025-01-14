@@ -1,16 +1,18 @@
 {
-    "sensor": {
-        "peak_solar_capacity": "Peak Solar Capacity",
-        "electricity_contract": "Electricity Contract",
-        "user_setting_cap_value": "User Setting Cap Value",
-        "min_charge_rate": "Minimum Charge Rate",
-        "current_month_peak": "Current Month Peak",
-        "monthly_energy_consumption": "Monthly Energy Consumption",
-        "session_status": "Session Status",
-        "session_consumption": "Session Consumption",
-        "session_start": "Session Start Time",
-        "home_charging_status": "Home Charging Status",
-        "energy_component_price": "Energy Component Price"
+    "entity": {
+        "sensor": {
+            "peak_solar_capacity": "Peak Solar Capacity",
+            "electricity_contract": "Electricity Contract",
+            "user_setting_cap_value": "User Setting Cap Value",
+            "min_charge_rate": "Minimum Charge Rate",
+            "current_month_peak": "Current Month Peak",
+            "monthly_energy_consumption": "Monthly Energy Consumption",
+            "session_status": "Session Status",
+            "session_consumption": "Session Consumption",
+            "session_start": "Session Start Time",
+            "home_charging_status": "Home Charging Status",
+            "energy_component_price": "Energy Component Price"
+        }
     },
     "config": {
         "abort": {
