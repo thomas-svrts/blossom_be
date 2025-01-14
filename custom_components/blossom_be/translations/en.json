@@ -1,18 +1,18 @@
 {
     "entity": {
         "sensor": {
-              "peak_solar_capacity": { "name": "Peak solar capacity" },
-      "electricity_contract": { "name": "Electricity contract" },
-      "user_setting_mode": { "name": "Charging mode" },
-      "user_setting_cap_value": { "name": "Charging limit on cap mode" },
-      "min_charge_rate": { "name": "Min charge rate" },
-      "current_month_peak": { "name": "Current monthly peak" },
-        "monthly_energy_consumption": { "name": "Monthly Energy Consumption"},
-        "session_status": { "name": "Session Status"},
-        "session_consumption": { "name": "Session Consumption"},
-        "session_start": { "name": "Session Start Time"},
-        "home_charging_status": { "name": "Home Charging Status"},
-        "energy_component_price": { "name": "Energy Component Price"}
+              "charging_station_peak_solar_capacity": { "name": "Peak solar capacity" },
+      "charging_station_electricity_contract": { "name": "Electricity contract" },
+      "charging_station_user_setting_mode": { "name": "Charging mode" },
+      "charging_station_user_setting_cap_value": { "name": "Charging limit on cap mode" },
+      "charging_station_min_charge_rate": { "name": "Min charge rate" },
+      "charging_station_current_month_peak": { "name": "Current monthly peak" },
+        "charging_station_monthly_energy_consumption": { "name": "Monthly Energy Consumption"},
+        "charging_station_session_status": { "name": "Session Status"},
+        "charging_station_session_consumption": { "name": "Session Consumption"},
+        "charging_station_session_start": { "name": "Session Start Time"},
+        "charging_station_home_charging_status": { "name": "Home Charging Status"},
+        "charging_station_energy_component_price": { "name": "Energy Component Price"}
         }
     },
     "config": {
