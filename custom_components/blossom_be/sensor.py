@@ -85,8 +85,10 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
                 if previous_key == "session" and data is None:
                     _LOGGER.debug("No session data; station status is '%s'.", 
                                   self.coordinator.data.get("home-charging-session", {}).get("status"))
-                    return None
-                    
+                    if self._parameter == "home-charging-session.session.status":
+                        return "NOT_ACTIVE"
+                    if self._parameter == "home-charging-session.session.kWh":
+                        return self._last_known_consumption if hasattr(self, "_last_known_consumption") else 0                   
                 # If the key path is invalid or not a dict, return None
                 _LOGGER.warning("Invalid key path: %s", self._parameter)
                 return None
@@ -94,7 +96,7 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
             # Update previous_key for the next iteration
             previous_key = key
     
-    
+        
         # If this is a timestamp field, convert to datetime
         if self._parameter == "home-charging-session.session.time_started_session":
             return datetime.fromisoformat(data)
@@ -108,21 +110,10 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
             parts = data.split("; info: ")
             if len(parts) > 1:
                 return parts[0].strip()  # Return just the status
-                
-        if self._parameter == "home-charging-session.session.status":
-            # Controleer op None of unknown en vervang door NOT_ACTIVE
-            if data in [None, "unknown"]:
-                return "NOT_ACTIVE"
-            return data
-            
+
         if self._parameter == "home-charging-session.session.kWh":
-            # Sessie actief? Retourneer huidige waarde, anders behoud laatste
-            session_active = self.coordinator.data.get("home-charging-session", {}).get("session", {}).get("status") == "IN_PROGRESS"
-            if session_active:
-                self._last_known_consumption = data  # Bewaar de huidige waarde
-            return self._last_known_consumption if hasattr(self, "_last_known_consumption") else 0
-
-
+            # Sessie actief? behoud laatste waarde
+            self._last_known_consumption = data  # Bewaar de huidige waarde
     
         # Default return: raw data
         return data
