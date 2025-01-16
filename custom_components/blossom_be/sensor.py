@@ -108,6 +108,21 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
             parts = data.split("; info: ")
             if len(parts) > 1:
                 return parts[0].strip()  # Return just the status
+                
+        if self._parameter == "home-charging-session.session.status":
+            # Controleer op None of unknown en vervang door NOT_ACTIVE
+            if data in [None, "unknown"]:
+                return "NOT_ACTIVE"
+            return data
+            
+        if self._parameter == "home-charging-session.session.kWh":
+            # Sessie actief? Retourneer huidige waarde, anders behoud laatste
+            session_active = self.coordinator.data.get("home-charging-session", {}).get("session", {}).get("status") == "IN_PROGRESS"
+            if session_active:
+                self._last_known_consumption = data  # Bewaar de huidige waarde
+            return self._last_known_consumption if hasattr(self, "_last_known_consumption") else 0
+
+
     
         # Default return: raw data
         return data
