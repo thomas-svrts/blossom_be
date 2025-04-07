@@ -9,7 +9,7 @@ from homeassistant.helpers.storage import Store
 _LOGGER = logging.getLogger(__name__)
 
 # API endpoints
-CURRENT_URL = "https://api.blossom.be/api/current"
+CURRENT_URL = "https://api.blossom.be/api/users/current"
 SET_POINTS_URL = "https://api.blossom.be/api/hems/set-points"
 HEMS_URL = "https://api.blossom.be/api/hems"
 CONSUMPTION_URL = "https://api.blossom.be/api/hems/energy-consumption"
