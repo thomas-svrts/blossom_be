@@ -6,13 +6,20 @@
         "title": "Configure Blossom Energy",
         "description": "Enter your Blossom Energy login credentials.",
         "data": {
-          "refresh_token": "Refresh token"
+          "refresh_token": {
+            "name": "Refresh token",
+            "description": "Enter your personal refresh token from the Blossom API."
+          }
         }
       }
     },
     "error": {
-      "invalid_auth": "Invalid authentication",
-      "cannot_connect": "Unable to connect"
+      "invalid_auth": {
+        "message": "Invalid authentication"
+      },
+      "cannot_connect": {
+        "message": "Unable to connect"
+      }
     }
   },
   "options": {
@@ -20,61 +27,10 @@
       "init": {
         "title": "Blossom Energy Options",
         "data": {
-          "scan_interval": "Scan interval (seconds)"
-        }
-      }
-    }
-  },
-  "entity": {
-    "sensor": {
-      "peak_solar_capacity": {
-        "name": "Peak Solar Capacity"
-      },
-      "electricity_contract": {
-        "name": "Electricity Contract"
-      },
-      "user_setting_cap_value": {
-        "name": "Power Capacity Limit"
-      },
-      "min_charge_rate": {
-        "name": "Minimum Charging Rate"
-      },
-      "current_month_peak": {
-        "name": "Current Month Peak"
-      },
-      "monthly_energy_consumption": {
-        "name": "Monthly Energy Consumption"
-      },
-      "last_session_status": {
-        "name": "Last Session Status"
-      },
-      "last_session_consumption": {
-        "name": "Last Session Consumption"
-      },
-      "last_session_start": {
-        "name": "Last Session Start Time"
-      },
-      "home_charging_status": {
-        "name": "Home Charging Status",
-        "state": {
-          "Available": "Available",
-          "SuspendedEVSE": "Paused due to lack of solar energy",
-          "Charging": "Charging",
-          "Preparing": "Starting up"
-        }
-      },
-      "energy_component_price": {
-        "name": "Energy Component Price"
-      }
-    },
-    "select": {
-      "charging_mode": {
-        "name": "Charging Mode",
-        "options": {
-          "solar": "Solar",
-          "cap": "Standard",
-          "standard": "Maximum",
-          "autopilot": "Automatic"
+          "scan_interval": {
+            "name": "Scan interval (seconds)",
+            "description": "How often should the API be polled?"
+          }
         }
       }
     }
