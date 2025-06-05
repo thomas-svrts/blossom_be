@@ -1,0 +1,28 @@
+{
+  "title": "Blossom Energy",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure Blossom Energy",
+        "description": "Enter your Blossom Energy login credentials.",
+        "data": {
+          "refresh_token": "Refresh token"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid authentication",
+      "cannot_connect": "Unable to connect"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Blossom Energy Options",
+        "data": {
+          "scan_interval": "Scan interval (seconds)"
+        }
+      }
+    }
+  }
+}

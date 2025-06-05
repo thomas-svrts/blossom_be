@@ -56,6 +56,9 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
         self._attr_name = unique_id
         self._attr_entity_category = entity_category
         self._parameter= parameter
+        self._attr_translation_key = unique_id
+        self._attr_has_entity_name = True
+
         
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, device_id)},
@@ -109,7 +112,7 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
             # Split the value and return only the status
             parts = data.split("; info: ")
             if len(parts) > 1:
-                return parts[0].strip()  # Return just the status
+                return parts[0].strip().lower()  # Return just the status
 
         if self._parameter == "home-charging-session.session.kWh":
             # Sessie actief? behoud laatste waarde

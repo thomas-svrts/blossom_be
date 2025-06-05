@@ -1,44 +1,75 @@
 {
-    "entity": {
-        "sensor": {
-              "charging_station_peak_solar_capacity": { "name": "Peak solar capacity" },
-      "charging_station_electricity_contract": { "name": "Electricity contract" },
-      "charging_station_user_setting_mode": { "name": "Charging mode" },
-      "charging_station_user_setting_cap_value": { "name": "Charging limit on cap mode" },
-      "charging_station_min_charge_rate": { "name": "Min charge rate" },
-      "charging_station_current_month_peak": { "name": "Current monthly peak" },
-        "charging_station_monthly_energy_consumption": { "name": "Monthly Energy Consumption"},
-        "charging_station_session_status": { "name": "Session Status"},
-        "charging_station_session_consumption": { "name": "Session Consumption"},
-        "charging_station_session_start": { "name": "Session Start Time"},
-        "charging_station_home_charging_status": { "name": "Home Charging Status"},
-        "charging_station_energy_component_price": { "name": "Energy Component Price"}
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure Blossom Energy",
+        "description": "Enter your Blossom Energy login credentials.",
+        "data": {
+          "refresh_token": "Refresh token"
         }
+      }
     },
-    "config": {
-        "abort": {
-            "already_configured": "Account is already configured",
-            "reauth_successful": "Re-authentication was successful"
-        },
-        "error": {
-            "invalid_auth": "Credentials rejected, please check your username and password."
-        },
-        "step": {
-            "login": {
-                "data": {
-                    "password": "Password",
-                    "username": "Username / e-mail"
-                },
-                "title": "Enter your Blossom account credentials"
-            },
-            "user": {
-                "data": {
-                    "authentication": "Use Blossom BE account credentials"
-                },
-                "title": "Do you want to sign in to Blossom BE?",
-                "description": "We need to have the Blossom refresh_token. You can obtain this by enabling the debugger in you browser and search for the token endpoint during login via app.blossom.be."
-            }
+    "error": {
+      "invalid_auth": "Invalid authentication",
+      "cannot_connect": "Unable to connect"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Blossom Energy Options",
+        "data": {
+          "scan_interval": "Scan interval (seconds)"
         }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "peak_solar_capacity": {
+        "name": "Peak Solar Capacity"
+      },
+      "electricity_contract": {
+        "name": "Electricity Contract"
+      },
+      "user_setting_cap_value": {
+        "name": "Power Capicity Limit"
+      },
+      "min_charge_rate": {
+        "name": "Minimum Charging Rate"
+      },
+      "current_month_peak": {
+        "name": "Current Month Peak"
+      },
+      "monthly_energy_consumption": {
+        "name": "Monthly Energy Consumption"
+      },
+      "last_session_status": {
+        "name": "Last Session Status"
+      },
+      "last_session_consumption": {
+        "name": "Last Session Consumption"
+      },
+      "last_session_start": {
+        "name": "Last Session Start Time"
+      },
+      "home_charging_status": {
+        "name": "Home Charging Status",
+        "state": {
+          "available": "Available",
+          "suspendedevse": "Paused due to lack of solar energy",
+          "charging": "Charging",
+          "preparing": "Starting up"
+        }
+      },
+      "energy_component_price": {
+        "name": "Energy Component Price"
+      }
     },
-    "title": "Blossom BE"
+    "select": {
+      "charging_mode": {
+        "name": "Charging Mode"
+      }
+    }
+  }
 }

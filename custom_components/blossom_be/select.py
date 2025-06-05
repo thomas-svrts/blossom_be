@@ -28,7 +28,10 @@ class BlossomModeSelect(CoordinatorEntity, SelectEntity):
         self._name = "Charging Mode"
         self._attr_unique_id = f"mode_selector"
         #self._attr_current_option = self.coordinator.data.get("set_points", {}).get("user_setting_mode", "solar")
-        self._attr_options = ["solar", "cap"]
+        self._attr_options = ["solar", "cap", "standard", "autopilot"]
+        self._attr_translation_key = "charging_mode"
+        self._attr_has_entity_name = True
+
 
     @property
     def entity_category(self):
