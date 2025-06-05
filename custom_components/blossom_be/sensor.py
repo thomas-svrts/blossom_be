@@ -89,7 +89,7 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
                     _LOGGER.debug("No session data; station status is '%s'.", 
                                   self.coordinator.data.get("home-charging-session", {}).get("status"))
                     if self._parameter == "home-charging-session.session.status":
-                        return "NOT_ACTIVE"
+                        return "not_active"
                     if self._parameter == "home-charging-session.session.kWh":
                         return self._last_known_consumption if hasattr(self, "_last_known_consumption") else 0                   
                 # If the key path is invalid or not a dict, return None
