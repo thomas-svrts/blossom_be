@@ -45,7 +45,11 @@
         "name": "Monthly Energy Consumption"
       },
       "last_session_status": {
-        "name": "Last Session Status"
+        "name": "Last Session Status",
+        "state": {
+          "not_active": "No active session",
+          "in_progress": "In progress"
+        }
       },
       "last_session_consumption": {
         "name": "Last Session Consumption"
