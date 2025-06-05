@@ -56,6 +56,9 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
         self._attr_name = unique_id
         self._attr_entity_category = entity_category
         self._parameter= parameter
+        self._attr_translation_key = unique_id
+        self._attr_has_entity_name = True
+
         
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, device_id)},
