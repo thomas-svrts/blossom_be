@@ -68,13 +68,7 @@
     },
     "select": {
       "charging_mode": {
-        "name": "Laadmodus",
-        "options": {
-          "solar": "Zon",
-          "cap": "Standaard",
-          "standard": "Maximum",
-          "autopilot": "Automatisch"
-        }
+        "name": "Laadmodus"
       }
     }
   }
