@@ -40,7 +40,6 @@ class BlossomModeSelect(CoordinatorEntity, SelectEntity):
     def device_info(self):
         return DeviceInfo(
             identifiers={(DOMAIN, self.device_id)},
-            name="Charging Station",
             manufacturer="Blossom",
         )
         
