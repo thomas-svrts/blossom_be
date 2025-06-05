@@ -56,10 +56,10 @@
       "home_charging_status": {
         "name": "Status thuisladen",
         "state": {
-          "Available": "Beschikbaar",
-          "SuspendedEVSE": "Laden gepauzeerd, tekort aan zonne-energie",
-          "Charging": "Aan het laden",
-          "Preparing": "Opstarten"
+          "available": "Beschikbaar",
+          "suspendedevse": "Laden gepauzeerd, tekort aan zonne-energie",
+          "charging": "Aan het laden",
+          "preparing": "Opstarten"
         }
       },
       "energy_component_price": {
