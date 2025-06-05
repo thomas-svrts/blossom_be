@@ -68,12 +68,7 @@
     },
     "select": {
       "charging_mode": {
-        "name": "Charging Mode",
-        "options": {
-          "solar": "Solar",
-          "cap": "Standard",
-          "standard": "Maximum",
-          "autopilot": "Automatic"
+        "name": "Charging Mode"
         }
       }
     }
