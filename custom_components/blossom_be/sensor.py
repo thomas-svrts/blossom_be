@@ -112,7 +112,7 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
             # Split the value and return only the status
             parts = data.split("; info: ")
             if len(parts) > 1:
-                return parts[0].strip()  # Return just the status
+                return parts[0].strip().lower()  # Return just the status
 
         if self._parameter == "home-charging-session.session.kWh":
             # Sessie actief? behoud laatste waarde
