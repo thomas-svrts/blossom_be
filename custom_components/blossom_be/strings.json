@@ -14,12 +14,8 @@
       }
     },
     "error": {
-      "invalid_auth": {
-        "message": "Invalid authentication"
-      },
-      "cannot_connect": {
-        "message": "Unable to connect"
-      }
+      "invalid_auth": "Invalid authentication",
+      "cannot_connect": "Unable to connect"
     }
   },
   "options": {
