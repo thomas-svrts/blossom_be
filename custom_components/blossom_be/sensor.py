@@ -113,6 +113,10 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
             if len(parts) >= 1:
                 return parts[0].strip().lower()  # Return just the status
 
+        if self._parameter == "home-charging-session.session.status":
+            # Sessie actief? convert status to lowerCase
+            return data.lower()
+    
         if self._parameter == "home-charging-session.session.kWh":
             # Sessie actief? behoud laatste waarde
             self._last_known_consumption = data  # Bewaar de huidige waarde
