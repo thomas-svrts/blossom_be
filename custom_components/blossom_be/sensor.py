@@ -53,7 +53,6 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
             self._attr_suggested_display_precision = 2
         self._attr_state_class = state_class
         self._attr_unique_id = unique_id
-        self._attr_name = unique_id
         self._attr_entity_category = entity_category
         self._parameter= parameter
         self._attr_translation_key = unique_id
