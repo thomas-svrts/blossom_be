@@ -7,7 +7,8 @@
         "description": "Voer je Blossom Energy-inloggegevens in.",
         "data": {
           "username": "Gebruikersnaam",
-          "password": "Wachtwoord"
+          "password": "Wachtwoord",
+          "refresh_token": "Refresh token"
         }
       }
     },
@@ -23,6 +24,43 @@
         "data": {
           "scan_interval": "Scaninterval (seconden)"
         }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "peak_solar_capacity": {
+        "name": "Piek zonnecapaciteit"
+      },
+      "electricity_contract": {
+        "name": "Elektriciteitscontract"
+      },
+      "user_setting_cap_value": {
+        "name": "Gebruikerslimiet"
+      },
+      "min_charge_rate": {
+        "name": "Minimale laadsnelheid"
+      },
+      "current_month_peak": {
+        "name": "Maandpiek"
+      },
+      "monthly_energy_consumption": {
+        "name": "Maandelijks energieverbruik"
+      },
+      "last_session_status": {
+        "name": "Laatste sessiestatus"
+      },
+      "last_session_consumption": {
+        "name": "Laatste sessie verbruik"
+      },
+      "last_session_start": {
+        "name": "Starttijd laatste sessie"
+      },
+      "home_charging_status": {
+        "name": "Status thuisladen"
+      },
+      "energy_component_price": {
+        "name": "Prijs energiecomponent"
       }
     }
   }
