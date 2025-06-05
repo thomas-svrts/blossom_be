@@ -33,7 +33,7 @@
         "name": "Electricity Contract"
       },
       "user_setting_cap_value": {
-        "name": "Power Capicity Limit"
+        "name": "Power Capacity Limit"
       },
       "min_charge_rate": {
         "name": "Minimum Charging Rate"
