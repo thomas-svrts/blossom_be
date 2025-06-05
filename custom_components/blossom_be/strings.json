@@ -3,26 +3,24 @@
   "config": {
     "step": {
       "user": {
-        "title": "Configureer Blossom Energy",
-        "description": "Voer je Blossom Energy-inloggegevens in.",
+        "title": "Configure Blossom Energy",
+        "description": "Enter your Blossom Energy login credentials.",
         "data": {
-          "username": "Gebruikersnaam",
-          "password": "Wachtwoord",
           "refresh_token": "Refresh token"
         }
       }
     },
     "error": {
-      "invalid_auth": "Ongeldige authenticatie",
-      "cannot_connect": "Kan geen verbinding maken"
+      "invalid_auth": "Invalid authentication",
+      "cannot_connect": "Unable to connect"
     }
   },
   "options": {
     "step": {
       "init": {
-        "title": "Opties voor Blossom Energy",
+        "title": "Blossom Energy Options",
         "data": {
-          "scan_interval": "Scaninterval (seconden)"
+          "scan_interval": "Scan interval (seconds)"
         }
       }
     }
@@ -30,37 +28,54 @@
   "entity": {
     "sensor": {
       "peak_solar_capacity": {
-        "name": "Piek zonnecapaciteit"
+        "name": "Peak Solar Capacity"
       },
       "electricity_contract": {
-        "name": "Elektriciteitscontract"
+        "name": "Electricity Contract"
       },
       "user_setting_cap_value": {
-        "name": "Gebruikerslimiet"
+        "name": "Power Capacity Limit"
       },
       "min_charge_rate": {
-        "name": "Minimale laadsnelheid"
+        "name": "Minimum Charging Rate"
       },
       "current_month_peak": {
-        "name": "Maandpiek"
+        "name": "Current Month Peak"
       },
       "monthly_energy_consumption": {
-        "name": "Maandelijks energieverbruik"
+        "name": "Monthly Energy Consumption"
       },
       "last_session_status": {
-        "name": "Laatste sessiestatus"
+        "name": "Last Session Status"
       },
       "last_session_consumption": {
-        "name": "Laatste sessie verbruik"
+        "name": "Last Session Consumption"
       },
       "last_session_start": {
-        "name": "Starttijd laatste sessie"
+        "name": "Last Session Start Time"
       },
       "home_charging_status": {
-        "name": "Status thuisladen"
+        "name": "Home Charging Status",
+        "state": {
+          "Available": "Available",
+          "SuspendedEVSE": "Paused due to lack of solar energy",
+          "Charging": "Charging",
+          "Preparing": "Starting up"
+        }
       },
       "energy_component_price": {
-        "name": "Prijs energiecomponent"
+        "name": "Energy Component Price"
+      }
+    },
+    "select": {
+      "charging_mode": {
+        "name": "Charging Mode",
+        "options": {
+          "solar": "Solar",
+          "cap": "Standard",
+          "standard": "Maximum",
+          "autopilot": "Automatic"
+        }
       }
     }
   }
