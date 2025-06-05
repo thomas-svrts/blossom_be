@@ -61,7 +61,6 @@ class BlossomSensor(CoordinatorEntity, SensorEntity):
         
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, device_id)},
-            name="Charging Station",
             manufacturer="Blossom",
         )
         
