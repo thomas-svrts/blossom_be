@@ -1,0 +1,29 @@
+{
+  "title": "Blossom Energy",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configureer Blossom Energy",
+        "description": "Voer je Blossom Energy-inloggegevens in.",
+        "data": {
+          "username": "Gebruikersnaam",
+          "password": "Wachtwoord"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Ongeldige authenticatie",
+      "cannot_connect": "Kan geen verbinding maken"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opties voor Blossom Energy",
+        "data": {
+          "scan_interval": "Scaninterval (seconden)"
+        }
+      }
+    }
+  }
+}
