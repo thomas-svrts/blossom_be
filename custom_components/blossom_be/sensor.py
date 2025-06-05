@@ -158,4 +158,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         BlossomSensor(coordinator, "energy_component_price", device_id,  "devices.0.device.charging_points.0.pricing_policy.energy_components.0.price",    SensorDeviceClass.MONETARY, None, "EUR", None ),   
     ]
     
+    for ent in entities:
+    _LOGGER.debug("Sensor entity: %s (key: %s)", ent._attr_unique_id, ent._attr_translation_key)
+
+    
     async_add_entities(entities)
