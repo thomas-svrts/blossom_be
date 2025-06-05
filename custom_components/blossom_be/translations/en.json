@@ -56,10 +56,10 @@
       "home_charging_status": {
         "name": "Home Charging Status",
         "state": {
-          "Available": "Available",
-          "SuspendedEVSE": "Paused due to lack of solar energy",
-          "Charging": "Charging",
-          "Preparing": "Starting up"
+          "available": "Available",
+          "suspendedevse": "Paused due to lack of solar energy",
+          "charging": "Charging",
+          "preparing": "Starting up"
         }
       },
       "energy_component_price": {
