@@ -7,8 +7,7 @@
         "description": "Enter your Blossom Energy login credentials.",
         "data": {
           "refresh_token": {
-            "name": "Refresh token",
-            "description": "Enter your personal refresh token from the Blossom API."
+            "name": "Refresh token"
           }
         }
       }
@@ -24,8 +23,7 @@
         "title": "Blossom Energy Options",
         "data": {
           "scan_interval": {
-            "name": "Scan interval (seconds)",
-            "description": "How often should the API be polled?"
+            "name": "Scan interval (seconds)"
           }
         }
       }
