@@ -45,7 +45,11 @@
         "name": "Maandelijks energieverbruik"
       },
       "last_session_status": {
-        "name": "Laatste sessiestatus"
+        "name": "Laatste sessiestatus",
+        "state": {
+          "not_active": "geen sessie",
+          "in_progress": "bezig"
+        }
       },
       "last_session_consumption": {
         "name": "Laatste sessie verbruik"
