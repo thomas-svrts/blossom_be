@@ -25,7 +25,6 @@ class BlossomModeSelect(CoordinatorEntity, SelectEntity):
         super().__init__(coordinator)  # Bind to the coordinator
         """Initialize the select entity."""
         self.device_id  = device_id 
-        self._name = "Charging Mode"
         self._attr_unique_id = f"mode_selector"
         #self._attr_current_option = self.coordinator.data.get("set_points", {}).get("user_setting_mode", "solar")
         self._attr_options = ["solar", "cap", "standard", "autopilot"]
