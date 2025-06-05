@@ -159,6 +159,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     ]
     
     for ent in entities:
-        _LOGGER.debug("Sensor entity: %s (key: %s)", ent._attr_unique_id, ent._attr_translation_key)
+        _LOGGER.debug("Sensor entity: %s (translationkey: %s, has_entity_name: %s)", ent._attr_unique_id, ent._attr_translation_key, ent._attr_has_entity_name)
         
     async_add_entities(entities)
