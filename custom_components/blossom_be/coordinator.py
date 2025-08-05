@@ -1,5 +1,6 @@
 import logging
 import aiohttp
+import json
 from datetime import timedelta, datetime
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from homeassistant.core import HomeAssistant
@@ -117,28 +118,29 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
                 # Fetch set_points
                 async with session.get(SET_POINTS_URL, headers=headers, params=params) as response:
                     self.set_points_data = await response.json() if response.status == 200 else None
-                    _LOGGER.debug("set_points_data refreshed successfully.")
+                    _LOGGER.debug("set_points_data refreshed successfully:\n%s", json.dumps(self.set_points_data, indent=2))
+
 
                 # Fetch consumption
                 async with session.get(CONSUMPTION_URL, headers=headers, params=params) as consumption_response:
                     self.consumption_data = await consumption_response.json() if consumption_response.status == 200 else None
-                    _LOGGER.debug("consumption_data refreshed successfully.")
+                    _LOGGER.debug("consumption_data refreshed successfully:\n%s", json.dumps(self.consumption_data, indent=2))
 
                 # Fetch session
                 async with session.get(SESSION_URL, headers=headers, params=params) as session_response:
                     self.session_data = await session_response.json() if session_response.status == 200 else None
-                    _LOGGER.debug("session_data refreshed successfully.")
+                    _LOGGER.debug("session_data refreshed successfully:\n%s", json.dumps(self.set_points_data, indent=2))
 
                 # Fetch HEMS and devices if cache expired
                 if not self.hems_last_fetched or (now - self.hems_last_fetched).seconds > 3600:
                     async with session.get(HEMS_URL, headers=headers, params=params) as hems_response:
                         self.hems_data = await hems_response.json() if hems_response.status == 200 else None
                         self.hems_last_fetched = now
-                        _LOGGER.debug("hems_data refreshed successfully.")
+                        _LOGGER.debug("hems_data refreshed successfully:\n%s", json.dumps(self.set_points_data, indent=2))
 
                     async with session.get(DEVICES_URL, headers=headers, params=params) as devices_response:
                         self.devices_data = await devices_response.json() if devices_response.status == 200 else None
-                        _LOGGER.debug("devices_data refreshed successfully.")
+                        _LOGGER.debug("devices_data refreshed successfully:\n%s", json.dumps(self.set_points_data, indent=2))
                 else:
                     _LOGGER.debug("hems/devices data not refreshed; cache is still valid. Last refresh %s seconds ago.",
                                   (now - self.hems_last_fetched).seconds)
