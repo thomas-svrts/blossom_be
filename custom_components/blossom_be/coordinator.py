@@ -43,6 +43,8 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
         self.session_data = None
         self.devices_data = None
         self.member_id = None  # Will hold the memberId from /current
+        self.installation_id = None  # Will hold the installationId from /current
+
 
     async def async_refresh_access_token(self):
         """Refresh the access token only if it has expired."""
@@ -103,17 +105,34 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
                         else:
                             _LOGGER.error("No members found in /current response.")
                             self.member_id = None
+                            
+                        installations = current_data.get("installations", [])
+                        if installations:
+                            self.installation_id = installations[0].get("id")
+                            _LOGGER.debug("Installation ID retrieved: %s", self.installation_id)
+                        else:
+                            _LOGGER.error("No installations found in /current response.")
+                            self.installation_id = None
                     else:
                         _LOGGER.error("Failed to fetch /current endpoint: %s", current_response.status)
                         self.member_id = None
+                        self.installation_id = None
 
                 # If we couldn't retrieve a member id, abort further API calls
                 if not self.member_id:
                     _LOGGER.error("Member ID is not available. Skipping further API calls.")
                     return None
+                    
+                # If we couldn't retrieve a installation id, abort further API calls
+                if not self.installation_id:
+                    _LOGGER.error("Installation ID is not available. Skipping further API calls.")
+                    return None
 
                 # Prepare query parameter for subsequent calls
-                params = {"memberId": self.member_id}
+                params = {
+                    "memberId": self.member_id,
+                    "installationId": self.installation_id
+                }
 
                 # Fetch set_points
                 async with session.get(SET_POINTS_URL, headers=headers, params=params) as response:
@@ -138,7 +157,7 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
                         self.hems_last_fetched = now
                         _LOGGER.debug("hems_data refreshed successfully:\n%s", json.dumps(self.hems_data, indent=2))
 
-                    async with session.get(DEVICES_URL, headers=headers, params=params) as devices_response:
+                    async with session.get(DEVICES_URL, headers=headers) as devices_response:
                         self.devices_data = await devices_response.json() if devices_response.status == 200 else None
                         _LOGGER.debug("devices_data refreshed successfully:\n%s", json.dumps(self.devices_data, indent=2))
                 else:
