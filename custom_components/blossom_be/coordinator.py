@@ -181,8 +181,12 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
             "Authorization": f"Bearer {self.access_token}",
             "Content-Type": "application/json"
         }
-        params = {"memberId": self.member_id} if self.member_id else {}
-        
+        params = {}
+        if self.member_id:
+            params["memberId"] = self.member_id
+        if self.installation_id:
+            params["installationId"] = self.installation_id        
+            
         json_data = {"mode": mode}
         if cap_value:
             json_data["cap"] = cap_value
