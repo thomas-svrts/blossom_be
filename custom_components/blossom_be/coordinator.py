@@ -146,14 +146,23 @@ class BlossomDataUpdateCoordinator(DataUpdateCoordinator):
                     _LOGGER.debug("consumption_data refreshed successfully:\n%s", json.dumps(self.consumption_data, indent=2))
 
                 # Fetch session
-                async with session.get(SESSION_URL, headers=headers, params=params) as session_response:
+                async with session.get(
+                    SESSION_URL, headers=headers, params=params
+                ) as session_response:
                     if session_response.status == 200:
-                         session_json = await session_response.json()
-                         self.session_data = session_json[0] if session_json else None
+                        session_json = await session_response.json()
+                        self.session_data = session_json[0] if session_json else None
                     else:
-                       _LOGGER.error("Failed to fetch session data : HTTP %s", session_response.status)
+                        _LOGGER.error(
+                            "Failed to fetch session data: HTTP %s",
+                            session_response.status,
+                        )
                         self.session_data = None
-                       _LOGGER.debug("session_data refreshed successfully:\n%s", json.dumps(self.session_data, indent=2))
+                
+                    _LOGGER.debug(
+                        "session_data refreshed:\n%s",
+                        json.dumps(self.session_data, indent=2),
+                    )
 
                 # Fetch HEMS and devices if cache expired
                 if not self.hems_last_fetched or (now - self.hems_last_fetched).seconds > 3600:
