@@ -155,7 +155,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         BlossomSensor(coordinator, "last_session_status", device_id,         "home-charging-session.session.status",    None, None, None, None ),   
         BlossomSensor(coordinator, "last_session_consumption", device_id,    "home-charging-session.session.kWh",    SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.KILO_WATT_HOUR, None ),   
         BlossomSensor(coordinator, "last_session_start", device_id,          "home-charging-session.session.time_started_session",    SensorDeviceClass.TIMESTAMP, None, None, None ),
-        BlossomSensor(coordinator, "home_charging_status", device_id,   "home-charging-session.status",    None, None, None, None ),   
+        BlossomSensor(coordinator, "home_charging_status", device_id,   "home-charging-session.deviceStatus",    None, None, None, None ),
         
         BlossomSensor(coordinator, "energy_component_price", device_id,  "devices.0.device.charging_points.0.pricing_policy.energy_components.0.price",    SensorDeviceClass.MONETARY, None, "EUR/kWh", None ),   
     ]
