@@ -15,7 +15,6 @@ from .coordinator import BlossomDataUpdateCoordinator
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     ATTR_BATTERY_LEVEL,
-    CONCENTRATION_PARTS_PER_MILLION,
     PERCENTAGE,
     UnitOfEnergy,
     UnitOfPower,
